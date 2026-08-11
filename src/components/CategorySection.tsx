@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { formatDateIndonesian } from '@/lib/date-utils';
 import { useLanguage } from '@/context/LanguageContext';
+import { translateCategory } from '@/lib/i18n';
+import AutoTranslate from './AutoTranslate';
 
 interface ArticleItem {
   id: number;
@@ -22,7 +24,7 @@ interface CategorySectionProps {
 }
 
 export default function CategorySection({ title, slug, articles }: CategorySectionProps) {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
 
   if (!articles || articles.length === 0) return null;
 
@@ -30,13 +32,13 @@ export default function CategorySection({ title, slug, articles }: CategorySecti
     <section className="my-6 md:my-8">
       <div className="flex justify-between items-center mb-4 md:mb-6 pb-2 border-b border-outline-variant/30">
         <h2 className="font-headline font-bold text-lg md:text-2xl text-primary dark:text-white uppercase border-l-4 rtl:border-l-0 rtl:border-r-4 border-brass-gold pl-3 rtl:pl-0 rtl:pr-3 tracking-wide">
-          {title}
+          {translateCategory({ name: title, slug }, language)}
         </h2>
         <Link
           href={`/kategori/${slug}`}
           className="text-xs font-bold text-secondary dark:text-brass-gold hover:text-primary transition-colors flex items-center gap-1 uppercase tracking-wider"
         >
-          {t('readMore')} <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+          {t('readMore')} <span className="material-symbols-outlined text-[14px] rtl:rotate-180">arrow_forward</span>
         </Link>
       </div>
 
@@ -61,15 +63,17 @@ export default function CategorySection({ title, slug, articles }: CategorySecti
             </div>
 
             <h3 className="font-headline font-bold text-sm md:text-base leading-snug group-hover:text-brass-gold transition-colors line-clamp-2 text-primary dark:text-white">
-              <Link href={`/artikel/${article.slug}`}>{article.title}</Link>
+              <Link href={`/artikel/${article.slug}`}>
+                <AutoTranslate text={article.title} />
+              </Link>
             </h3>
 
             <p className="text-xs text-on-surface-variant dark:text-gray-300 line-clamp-2 leading-relaxed hidden md:block">
-              {article.excerpt}
+              <AutoTranslate text={article.excerpt} />
             </p>
 
             <span className="text-[11px] font-semibold text-outline dark:text-gray-400 mt-auto pt-1">
-              {formatDateIndonesian(article.createdAt)}
+              {formatDateIndonesian(article.createdAt, language)}
             </span>
           </article>
         ))}

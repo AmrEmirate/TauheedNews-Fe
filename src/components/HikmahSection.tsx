@@ -3,6 +3,8 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useLanguage } from '@/context/LanguageContext';
+import AutoTranslate from './AutoTranslate';
 
 const QUOTES = [
   {
@@ -32,6 +34,7 @@ const QUOTES = [
 ];
 
 export default function HikmahSection() {
+  const { t } = useLanguage();
   const [activeIdx, setActiveIdx] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -85,14 +88,14 @@ export default function HikmahSection() {
   return (
     <section className="my-8 relative group">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="font-headline font-bold text-xl text-primary dark:text-white uppercase border-l-4 border-brass-gold pl-3 tracking-wide">
-          Hikmah Masyayikh
+        <h2 className="font-headline font-bold text-xl text-primary dark:text-white uppercase border-l-4 rtl:border-l-0 rtl:border-r-4 border-brass-gold pl-3 rtl:pl-0 rtl:pr-3 tracking-wide">
+          {t('hikmah')}
         </h2>
         <Link
           href="/kategori/ulama-warisan-ilmu"
           className="text-xs font-bold text-secondary dark:text-brass-gold hover:text-primary transition-colors flex items-center gap-1 uppercase tracking-wider"
         >
-          Lihat Semua <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+          {t('readMore')} <span className="material-symbols-outlined text-[14px] rtl:rotate-180">arrow_forward</span>
         </Link>
       </div>
 
@@ -126,14 +129,14 @@ export default function HikmahSection() {
                 <div className="flex-1 min-w-0 relative">
                   <span className="text-brass-gold text-4xl sm:text-5xl font-serif leading-none block -mb-2 select-none">&ldquo;</span>
                   <p className="text-primary dark:text-white font-headline text-base sm:text-lg italic leading-relaxed mb-3">
-                    {item.quote}
+                    <AutoTranslate text={item.quote} />
                   </p>
                   <div>
                     <p className="text-xs sm:text-sm font-bold text-primary dark:text-white">
-                      {item.author}
+                      <AutoTranslate text={item.author} />
                     </p>
                     <p className="text-[11px] text-gray-500 dark:text-gray-400 italic">
-                      {item.title}
+                      <AutoTranslate text={item.title} />
                     </p>
                   </div>
                 </div>
@@ -145,15 +148,15 @@ export default function HikmahSection() {
         {/* Navigation Arrow Buttons */}
         <button
           onClick={prevSlide}
-          className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/30 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity z-10"
-          aria-label="Kutipan Sebelumnya"
+          className="absolute left-2 rtl:left-auto rtl:right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/30 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity z-10"
+          aria-label={t('prevSlide')}
         >
           <span className="material-symbols-outlined text-[18px]">chevron_left</span>
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/30 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity z-10"
-          aria-label="Kutipan Selanjutnya"
+          className="absolute right-2 rtl:right-auto rtl:left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/30 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity z-10"
+          aria-label={t('nextSlide')}
         >
           <span className="material-symbols-outlined text-[18px]">chevron_right</span>
         </button>
@@ -170,7 +173,7 @@ export default function HikmahSection() {
                 ? 'bg-deep-green dark:bg-brass-gold w-6'
                 : 'bg-gray-300 dark:bg-gray-700 w-2 hover:bg-gray-400'
             }`}
-            aria-label={`Lihat Kutipan ${idx + 1}`}
+            aria-label={`Slide ${idx + 1}`}
           />
         ))}
       </div>

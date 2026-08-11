@@ -87,7 +87,7 @@ export default function Footer() {
           {/* Col 3: Informasi */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold text-brass-gold uppercase tracking-wider">
-              INFORMASI
+              {t('information')}
             </h4>
             <ul className="space-y-2 text-xs text-gray-300">
               <li>
@@ -97,7 +97,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/tentang-kami#redaksi" className="hover:text-brass-gold transition-colors">
-                  Dewan Redaksi
+                  {t('editorialBoard')}
                 </Link>
               </li>
               <li>
@@ -116,34 +116,34 @@ export default function Footer() {
           {/* Col 4: Dukung Dakwah & Newsletter */}
           <div className="space-y-4">
             <h4 className="text-xs font-bold text-brass-gold uppercase tracking-wider">
-              DUKUNG DAKWAH
+              {t('supportDakwah')}
             </h4>
             <p className="text-xs text-gray-300 leading-relaxed">
-              Mari bersama mendukung dakwah Tauhid dan Sunnah. Setiap kontribusi Anda sangat berarti bagi umat.
+              {t('supportDakwahDesc')}
             </p>
             <button className="w-full bg-brass-gold hover:bg-yellow-600 text-deep-navy font-bold text-xs py-2.5 rounded uppercase tracking-wider transition-colors">
-              DONASI SEKARANG
+              {t('donateNow')}
             </button>
 
             <div className="pt-2 space-y-2">
               <h5 className="text-xs font-bold text-white uppercase tracking-wider">
-                Newsletter
+                {t('newsletter')}
               </h5>
               <p className="text-[11px] text-gray-300">
-                Dapatkan update artikel terbaru langsung ke email Anda.
+                {t('newsletterFooterDesc')}
               </p>
               <form onSubmit={(e) => e.preventDefault()} className="space-y-2">
                 <input
                   suppressHydrationWarning
                   type="email"
-                  placeholder="Masukkan email Anda"
+                  placeholder={t('searchPlaceholder')}
                   className="w-full text-xs p-2.5 rounded bg-white/10 border border-white/20 text-white placeholder:text-gray-400 outline-none focus:border-brass-gold"
                 />
                 <button
                   type="submit"
                   className="w-full bg-deep-green hover:bg-green-950 text-white text-xs font-bold py-2 rounded border border-brass-gold/50 transition-colors uppercase tracking-wider"
                 >
-                  BERLANGGANAN
+                  {t('subscribeBtn')}
                 </button>
               </form>
             </div>

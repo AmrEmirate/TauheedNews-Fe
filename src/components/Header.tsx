@@ -14,14 +14,14 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
 
   useEffect(() => {
-    setDateStr(getFormattedDates());
+    setDateStr(getFormattedDates(undefined, language));
     if (document.documentElement.classList.contains('dark')) {
       setIsDarkMode(true);
     }
-  }, []);
+  }, [language]);
 
   const toggleDarkMode = () => {
     if (isDarkMode) {
@@ -148,7 +148,7 @@ export default function Header() {
                 &ldquo;وَأَنَّ هَٰذَا صِرَاطِي مُسْتَقِيمًا فَاتَّبِعُوهُ&rdquo;
               </p>
               <p className="text-[11px] text-on-surface-variant dark:text-gray-400 font-medium mt-0.5">
-                &quot;Dan ini adalah jalan-Ku yang lurus, maka ikutilah dia.&quot; (QS. Al-An&apos;am: 153)
+                {t('headerVerseTranslation')}
               </p>
             </div>
           </div>

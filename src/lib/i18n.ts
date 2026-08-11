@@ -324,4 +324,141 @@ export const translations: Translations = {
     en: 'Main Menu Tauheed News',
     ar: 'القائمة الرئيسية',
   },
+  headerVerseTranslation: {
+    id: '"Dan ini adalah jalan-Ku yang lurus, maka ikutilah dia." (QS. Al-An\'am: 153)',
+    en: '"And [moreover], this is My path, which is straight, so follow it." (QS. Al-An\'am: 153)',
+    ar: '"وَأَنَّ هَٰذَا صِرَاطِي مُسْتَقِيمًا فَاتَّبِعُوهُ" (سورة الأنعام: ١٥٣)',
+  },
+  textSize: {
+    id: 'Ukuran Teks:',
+    en: 'Text Size:',
+    ar: 'حجم النص:',
+  },
+  tags: {
+    id: 'TAGAR',
+    en: 'TAGS',
+    ar: 'الوسوم',
+  },
+  linkCopied: {
+    id: 'Link disalin!',
+    en: 'Link copied!',
+    ar: 'تم نسخ الرابط!',
+  },
+  freeEbookTitle: {
+    id: 'E-Book Gratis',
+    en: 'Free E-Book',
+    ar: 'كتب إلكترونية مجانية',
+  },
+  freeEbookDesc: {
+    id: 'Dapatkan berbagai e-book bermanfaat untuk memperkuat ilmu dan keimanan Anda.',
+    en: 'Get various beneficial e-books to strengthen your knowledge and faith.',
+    ar: 'احصل على كتب إلكترونية مفيدة لتعزيز علمك وإيمانك.',
+  },
+  downloadNow: {
+    id: 'Unduh Sekarang',
+    en: 'Download Now',
+    ar: 'تحميل الآن',
+  },
+  newsletterTitle: {
+    id: 'Langganan Buletin Tauheed News',
+    en: 'Subscribe to Tauheed News Bulletin',
+    ar: 'النشرة الإخبارية لأخبار التوحيد',
+  },
+  newsletterDesc: {
+    id: 'Dapatkan rangkuman artikel terbaru & faedah ilmu syar\'i langsung ke email Anda.',
+    en: 'Get summaries of latest articles & sharia knowledge straight to your email.',
+    ar: 'احصل على ملخص أحدث المقالات والفوائد الشرعية مباشرة إلى بريدك.',
+  },
+  subscribeFree: {
+    id: 'Daftar Gratis',
+    en: 'Subscribe Free',
+    ar: 'اشترك مجاناً',
+  },
+  information: {
+    id: 'INFORMASI',
+    en: 'INFORMATION',
+    ar: 'معلومات',
+  },
+  editorialBoard: {
+    id: 'Dewan Redaksi',
+    en: 'Editorial Board',
+    ar: 'هيئة التحرير',
+  },
+  supportDakwah: {
+    id: 'DUKUNG DAKWAH',
+    en: 'SUPPORT DAKWAH',
+    ar: 'دعم الدعوة',
+  },
+  supportDakwahDesc: {
+    id: 'Mari bersama mendukung dakwah Tauhid dan Sunnah. Setiap kontribusi Anda sangat berarti bagi umat.',
+    en: 'Let us support the call of Tauheed and Sunnah together. Every contribution matters.',
+    ar: 'دعونا ندعم دعوة التوحيد والسنة معا. كل مساهمة لها قيمة كبيرة.',
+  },
+  donateNow: {
+    id: 'DONASI SEKARANG',
+    en: 'DONATE NOW',
+    ar: 'تبرع الآن',
+  },
+  newsletter: {
+    id: 'Newsletter',
+    en: 'Newsletter',
+    ar: 'النشرة الإخبارية',
+  },
+  newsletterFooterDesc: {
+    id: 'Dapatkan update artikel terbaru langsung ke email Anda.',
+    en: 'Get the latest article updates directly to your email.',
+    ar: 'احصل على آخر تحديثات المقالات مباشرة إلى بريدك الإلكتروني.',
+  },
+  subscribeBtn: {
+    id: 'BERLANGGANAN',
+    en: 'SUBSCRIBE',
+    ar: 'اشتراك',
+  },
+  prevSlide: {
+    id: 'Slide sebelumnya',
+    en: 'Previous slide',
+    ar: 'الشريحة السابقة',
+  },
+  nextSlide: {
+    id: 'Slide selanjutnya',
+    en: 'Next slide',
+    ar: 'الشريحة التالية',
+  },
 };
+
+export function translateCategory(
+  category: { name: string; slug?: string } | string | null | undefined,
+  lang: Language = 'id'
+): string {
+  if (!category) return '';
+  const catName = typeof category === 'string' ? category : category.name;
+  const catSlug = typeof category === 'object' && category.slug ? category.slug : '';
+
+  const categoryMap: Record<string, { id: string; en: string; ar: string }> = {
+    'tuntunan-islam': { id: 'Tuntunan Islam', en: 'Islamic Guidance', ar: 'الهداية الإسلامية' },
+    'aqidah-tauhid': { id: 'Aqidah & Tauhid', en: 'Aqidah & Tauheed', ar: 'العقيدة والتوحيد' },
+    'ulama-warisan-ilmu': { id: 'Ulama & Warisan Ilmu', en: 'Scholars & Knowledge', ar: 'دروس العلماء' },
+    'dunia-islam': { id: 'Dunia Islam', en: 'Islamic World', ar: 'العالم الإسلامي' },
+    'haramain-news': { id: 'Timur Tengah & Haramain', en: 'Middle East & Haramain', ar: 'الشرق الأوسط والحرمان' },
+    'kajian-kitab': { id: 'Sejarah Islam & Kitab', en: 'Islamic History & Books', ar: 'التاريخ الإسلامي' },
+    'fatwa-fikih': { id: 'Opini & Fatwa Fikih', en: 'Opinion & Fiqh Fatwa', ar: 'آراء وتحليلات' },
+  };
+
+  if (catSlug && categoryMap[catSlug]) {
+    return categoryMap[catSlug][lang] || categoryMap[catSlug].id;
+  }
+
+  const nameLower = catName.toLowerCase();
+  for (const key of Object.keys(categoryMap)) {
+    const item = categoryMap[key];
+    if (
+      item.id.toLowerCase() === nameLower ||
+      item.en.toLowerCase() === nameLower ||
+      item.ar === catName
+    ) {
+      return item[lang] || item.id;
+    }
+  }
+
+  return catName;
+}

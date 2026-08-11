@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { formatDateIndonesian } from '@/lib/date-utils';
 import { calculateReadingTime } from '@/lib/reading-time';
 import { useLanguage } from '@/context/LanguageContext';
+import { translateCategory } from '@/lib/i18n';
 
 interface ArticleData {
   id: number;
@@ -155,16 +156,16 @@ export default function ArticleReader({ article, relatedArticles }: ArticleReade
       {/* Breadcrumbs - Mobile & Desktop */}
       <nav className="flex items-center gap-1.5 text-xs text-on-surface-variant dark:text-gray-400 mb-4 flex-wrap">
         <Link href="/" className="hover:text-brass-gold transition-colors">{t('navHome')}</Link>
-        <span className="material-symbols-outlined text-[12px]">chevron_right</span>
+        <span className="material-symbols-outlined text-[12px] rtl:rotate-180">chevron_right</span>
         <Link href={`/kategori/${article.category?.slug}`} className="hover:text-brass-gold transition-colors">
-          {article.category?.name}
+          {translateCategory(article.category, language)}
         </Link>
       </nav>
 
       {/* Font size controls & Translation Banner - DESKTOP ONLY */}
       <div className="hidden md:flex bg-news-gray dark:bg-slate-900 border-y border-outline-variant/30 py-2.5 px-4 mb-6 flex-wrap justify-between items-center text-xs font-semibold gap-3">
         <div className="flex items-center gap-3">
-          <span className="text-on-surface-variant dark:text-gray-400">Ukuran Teks:</span>
+          <span className="text-on-surface-variant dark:text-gray-400">{t('textSize')}</span>
           <button
             onClick={() => setFontSize((prev) => Math.max(14, prev - 2))}
             className="w-8 h-8 rounded bg-white dark:bg-slate-800 border border-outline-variant hover:border-brass-gold flex items-center justify-center font-bold text-sm shadow-sm"
@@ -198,7 +199,7 @@ export default function ArticleReader({ article, relatedArticles }: ArticleReade
         <div className="flex items-center gap-3">
           <span className="bg-brass-gold/20 text-brass-gold font-bold px-2.5 py-1 rounded flex items-center gap-1">
             <span className="material-symbols-outlined text-[14px]">schedule</span>
-            {calculateReadingTime(article.content)}
+            {calculateReadingTime(article.content, language)}
           </span>
           <button
             onClick={toggleBookmark}
@@ -232,7 +233,7 @@ export default function ArticleReader({ article, relatedArticles }: ArticleReade
           <div className="flex items-center gap-3 md:gap-4 text-xs text-on-surface-variant dark:text-gray-400 mt-4 pb-4 border-b border-outline-variant/30 flex-wrap">
             <span className="flex items-center gap-1">
               <span className="material-symbols-outlined text-[14px] text-brass-gold">calendar_month</span>
-              {formatDateIndonesian(article.createdAt)}
+              {formatDateIndonesian(article.createdAt, language)}
             </span>
             <span className="flex items-center gap-1">
               <span className="material-symbols-outlined text-[14px] text-brass-gold">person</span>
@@ -240,7 +241,7 @@ export default function ArticleReader({ article, relatedArticles }: ArticleReade
             </span>
             <span className="flex items-center gap-1">
               <span className="material-symbols-outlined text-[14px] text-brass-gold">schedule</span>
-              {calculateReadingTime(article.content)}
+              {calculateReadingTime(article.content, language)}
             </span>
           </div>
         </div>
@@ -300,7 +301,7 @@ export default function ArticleReader({ article, relatedArticles }: ArticleReade
             </button>
             {copyNotification && (
               <span className="text-xs font-bold text-emerald-600 animate-pulse ml-1">
-                Link disalin!
+                {t('linkCopied')}
               </span>
             )}
           </div>
@@ -328,7 +329,7 @@ export default function ArticleReader({ article, relatedArticles }: ArticleReade
         {/* TAGAR / TAGS Section */}
         <div className="pt-6 border-t border-outline-variant/30 space-y-3">
           <span className="text-xs font-bold uppercase tracking-wider text-outline dark:text-gray-400">
-            TAGAR
+            {t('tags')}
           </span>
           <div className="flex flex-wrap gap-2">
             {defaultTags.map((tag) => (
@@ -367,7 +368,7 @@ export default function ArticleReader({ article, relatedArticles }: ArticleReade
                     <Link href={`/artikel/${rel.slug}`}>{rel.title}</Link>
                   </h4>
                   <span className="text-[10px] text-outline dark:text-gray-400">
-                    {formatDateIndonesian(rel.createdAt)}
+                    {formatDateIndonesian(rel.createdAt, language)}
                   </span>
                 </div>
               ))}

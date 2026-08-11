@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { formatDateIndonesian } from '@/lib/date-utils';
 import { useLanguage } from '@/context/LanguageContext';
+import { translateCategory } from '@/lib/i18n';
+import AutoTranslate from './AutoTranslate';
 
 interface ArticleItem {
   id: number;
@@ -27,7 +29,7 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ headlineArticle, subHeadlines }: HeroSectionProps) {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -74,7 +76,7 @@ export default function HeroSection({ headlineArticle, subHeadlines }: HeroSecti
 
   // Handle scroll for dot indicator sync
   const handleScroll = () => {
-    if (scrollRef.current) {
+    if (scrollRef.current && allSlides.length > 0) {
       const container = scrollRef.current;
       const slideWidth = container.offsetWidth;
       const newIndex = Math.round(container.scrollLeft / slideWidth);
@@ -117,15 +119,17 @@ export default function HeroSection({ headlineArticle, subHeadlines }: HeroSecti
                   {t('headline')}
                 </span>
                 <h2 className="font-headline font-bold text-xl leading-snug mb-2 line-clamp-3">
-                  <Link href={`/artikel/${slide.slug}`}>{slide.title}</Link>
+                  <Link href={`/artikel/${slide.slug}`}>
+                    <AutoTranslate text={slide.title} />
+                  </Link>
                 </h2>
                 <p className="text-xs text-gray-200 line-clamp-2 mb-3 leading-relaxed">
-                  {slide.excerpt}
+                  <AutoTranslate text={slide.excerpt} />
                 </p>
                 <div className="flex items-center gap-3 text-[11px] text-gray-300">
                   <span className="flex items-center gap-1">
                     <span className="material-symbols-outlined text-[12px] text-brass-gold">calendar_month</span>
-                    {formatDateIndonesian(slide.createdAt)}
+                    {formatDateIndonesian(slide.createdAt, language)}
                   </span>
                   <span className="flex items-center gap-1">
                     <span className="material-symbols-outlined text-[12px] text-brass-gold">person</span>
@@ -141,14 +145,14 @@ export default function HeroSection({ headlineArticle, subHeadlines }: HeroSecti
         <button
           onClick={prevSlide}
           className="absolute left-2 rtl:left-auto rtl:right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 text-white flex items-center justify-center backdrop-blur-sm hover:bg-black/60 transition-colors z-10"
-          aria-label="Slide sebelumnya"
+          aria-label={t('prevSlide')}
         >
           <span className="material-symbols-outlined text-[18px]">chevron_left</span>
         </button>
         <button
           onClick={nextSlide}
           className="absolute right-2 rtl:right-auto rtl:left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 text-white flex items-center justify-center backdrop-blur-sm hover:bg-black/60 transition-colors z-10"
-          aria-label="Slide selanjutnya"
+          aria-label={t('nextSlide')}
         >
           <span className="material-symbols-outlined text-[18px]">chevron_right</span>
         </button>
@@ -190,17 +194,17 @@ export default function HeroSection({ headlineArticle, subHeadlines }: HeroSecti
             </span>
             <h2 className="font-headline font-bold text-2xl md:text-3xl leading-snug hover:text-brass-gold transition-colors">
               <Link href={`/artikel/${headlineArticle.slug}`}>
-                {headlineArticle.title}
+                <AutoTranslate text={headlineArticle.title} />
               </Link>
             </h2>
             <p className="text-sm text-gray-200 line-clamp-2 md:w-5/6 leading-relaxed">
-              {headlineArticle.excerpt}
+              <AutoTranslate text={headlineArticle.excerpt} />
             </p>
             <div className="flex items-center justify-between mt-2 pt-2 border-t border-white/20">
               <div className="flex items-center gap-4 text-xs text-gray-300 font-medium">
                 <span className="flex items-center gap-1">
                   <span className="material-symbols-outlined text-[14px] text-brass-gold">calendar_month</span>{' '}
-                  {formatDateIndonesian(headlineArticle.createdAt)}
+                  {formatDateIndonesian(headlineArticle.createdAt, language)}
                 </span>
                 <span className="flex items-center gap-1">
                   <span className="material-symbols-outlined text-[14px] text-brass-gold">person</span>{' '}
@@ -212,7 +216,7 @@ export default function HeroSection({ headlineArticle, subHeadlines }: HeroSecti
                 className="bg-brass-gold hover:bg-yellow-600 text-deep-navy font-bold px-4 py-2 rounded text-xs transition-colors flex items-center gap-1.5 shadow uppercase"
               >
                 {t('readMore')}{' '}
-                <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+                <span className="material-symbols-outlined text-[14px] rtl:rotate-180">arrow_forward</span>
               </Link>
             </div>
           </div>
@@ -236,14 +240,16 @@ export default function HeroSection({ headlineArticle, subHeadlines }: HeroSecti
               <div className="absolute inset-0 bg-gradient-to-t from-deep-navy via-deep-navy/80 to-transparent"></div>
               <div className="absolute bottom-0 left-0 p-5 text-white w-full">
                 <span className="bg-primary/90 text-inverse-primary text-[11px] font-bold px-2 py-0.5 rounded uppercase mb-2 inline-block tracking-wider">
-                  {sub.category?.name}
+                  {translateCategory(sub.category, language)}
                 </span>
                 <h3 className="font-headline font-bold text-lg leading-snug line-clamp-2 hover:text-brass-gold transition-colors">
-                  <Link href={`/artikel/${sub.slug}`}>{sub.title}</Link>
+                  <Link href={`/artikel/${sub.slug}`}>
+                    <AutoTranslate text={sub.title} />
+                  </Link>
                 </h3>
                 <div className="mt-2 text-xs text-gray-300 flex items-center gap-1">
                   <span className="material-symbols-outlined text-[14px] text-brass-gold">calendar_month</span>{' '}
-                  {formatDateIndonesian(sub.createdAt)}
+                  {formatDateIndonesian(sub.createdAt, language)}
                 </div>
               </div>
             </article>

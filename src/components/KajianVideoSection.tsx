@@ -3,6 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useLanguage } from '@/context/LanguageContext';
+import AutoTranslate from './AutoTranslate';
 
 interface MediaItem {
   id: number;
@@ -19,6 +21,7 @@ interface KajianVideoSectionProps {
 }
 
 export default function KajianVideoSection({ videos }: KajianVideoSectionProps) {
+  const { t } = useLanguage();
   const displayVideos = videos && videos.length > 0 ? videos : [
     {
       id: 1,
@@ -52,14 +55,14 @@ export default function KajianVideoSection({ videos }: KajianVideoSectionProps) 
   return (
     <section className="my-8">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="font-headline font-bold text-xl text-primary dark:text-white uppercase border-l-4 border-brass-gold pl-3 tracking-wide">
-          Kajian Video
+        <h2 className="font-headline font-bold text-xl text-primary dark:text-white uppercase border-l-4 rtl:border-l-0 rtl:border-r-4 border-brass-gold pl-3 rtl:pl-0 rtl:pr-3 tracking-wide">
+          {t('kajianVideo')}
         </h2>
         <Link
           href="/multimedia"
           className="text-xs font-bold text-secondary dark:text-brass-gold hover:text-primary transition-colors flex items-center gap-1 uppercase tracking-wider"
         >
-          Lihat Semua <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+          {t('readMore')} <span className="material-symbols-outlined text-[14px] rtl:rotate-180">arrow_forward</span>
         </Link>
       </div>
 
@@ -93,11 +96,11 @@ export default function KajianVideoSection({ videos }: KajianVideoSectionProps) 
             </div>
 
             <h3 className="font-headline font-bold text-sm leading-snug group-hover:text-brass-gold transition-colors line-clamp-2 text-primary dark:text-white">
-              {video.title}
+              <AutoTranslate text={video.title} />
             </h3>
 
             <p className="text-xs text-on-surface-variant dark:text-gray-400 font-medium">
-              {video.speaker}
+              <AutoTranslate text={video.speaker} />
             </p>
           </div>
         ))}

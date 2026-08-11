@@ -4,6 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
+import { translateCategory } from '@/lib/i18n';
+import AutoTranslate from './AutoTranslate';
 
 interface PopularArticle {
   id: number;
@@ -31,7 +33,7 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ popularArticles = [], upcomingKajian = [] }: SidebarProps) {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
 
   return (
     <aside className="space-y-8">
@@ -53,10 +55,12 @@ export default function Sidebar({ popularArticles = [], upcomingKajian = [] }: S
               )}
               <div className="space-y-0.5 flex-grow min-w-0">
                 <h4 className="text-xs font-bold text-primary dark:text-white leading-snug group-hover:text-brass-gold transition-colors line-clamp-2">
-                  <Link href={`/artikel/${art.slug}`}>{art.title}</Link>
+                  <Link href={`/artikel/${art.slug}`}>
+                    <AutoTranslate text={art.title} />
+                  </Link>
                 </h4>
                 <span className="text-[10px] text-outline dark:text-gray-400">
-                  {art.category?.name}
+                  {translateCategory(art.category, language)}
                 </span>
               </div>
             </div>
@@ -76,7 +80,7 @@ export default function Sidebar({ popularArticles = [], upcomingKajian = [] }: S
           طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ
         </p>
         <p className="text-sm text-on-surface-variant dark:text-gray-300 italic text-center leading-relaxed mb-3">
-          &ldquo;Tauhid adalah hak Allah yang paling agung atas hamba-Nya.&rdquo;
+          &ldquo;<AutoTranslate text="Tauhid adalah hak Allah yang paling agung atas hamba-Nya." />&rdquo;
         </p>
         <div className="flex items-center gap-2 justify-center pt-2 border-t border-outline-variant/30">
           <div className="w-8 h-8 rounded-full bg-deep-navy flex items-center justify-center text-brass-gold text-[10px] font-bold flex-shrink-0">
@@ -100,9 +104,15 @@ export default function Sidebar({ popularArticles = [], upcomingKajian = [] }: S
             <div key={k.id} className="flex gap-3 items-start">
               <span className="material-symbols-outlined text-brass-gold text-[18px] flex-shrink-0 mt-0.5">event</span>
               <div className="space-y-0.5">
-                <h4 className="font-bold text-white text-sm line-clamp-1">{k.title}</h4>
-                <p className="text-gray-300">{k.speaker}</p>
-                <p className="text-gray-400">{k.dateTime}</p>
+                <h4 className="font-bold text-white text-sm line-clamp-1">
+                  <AutoTranslate text={k.title} />
+                </h4>
+                <p className="text-gray-300">
+                  <AutoTranslate text={k.speaker} />
+                </p>
+                <p className="text-gray-400">
+                  <AutoTranslate text={k.dateTime} />
+                </p>
               </div>
             </div>
           ))}
@@ -119,15 +129,15 @@ export default function Sidebar({ popularArticles = [], upcomingKajian = [] }: S
       {/* E-Book Gratis */}
       <div className="bg-news-gray dark:bg-slate-900 p-6 rounded-lg border border-outline-variant/40 shadow-sm">
         <h3 className="font-headline font-bold text-lg text-primary dark:text-white uppercase tracking-wide mb-3">
-          E-Book Gratis
+          {t('freeEbookTitle')}
         </h3>
         <div className="flex gap-3 items-start">
           <div className="flex-grow">
             <p className="text-xs text-on-surface-variant dark:text-gray-300 leading-relaxed mb-3">
-              Dapatkan berbagai e-book bermanfaat untuk memperkuat ilmu dan keimanan Anda.
+              {t('freeEbookDesc')}
             </p>
             <button className="w-full bg-deep-navy hover:bg-black text-white font-bold text-xs py-2.5 rounded uppercase tracking-wider transition-colors">
-              Unduh Sekarang
+              {t('downloadNow')}
             </button>
           </div>
           <div className="w-20 h-24 relative rounded overflow-hidden flex-shrink-0 bg-deep-navy/10">
@@ -141,10 +151,10 @@ export default function Sidebar({ popularArticles = [], upcomingKajian = [] }: S
       {/* Newsletter Sidebar */}
       <div className="bg-gradient-to-br from-brass-gold to-yellow-700 text-deep-navy p-6 rounded-lg shadow-md space-y-3">
         <h4 className="font-headline font-bold text-lg leading-tight uppercase">
-          Langganan Buletin Tauheed News
+          {t('newsletterTitle')}
         </h4>
         <p className="text-xs text-deep-navy/90 font-medium">
-          Dapatkan rangkuman artikel terbaru &amp; faedah ilmu syar&apos;i langsung ke email Anda.
+          {t('newsletterDesc')}
         </p>
         <form onSubmit={(e) => e.preventDefault()} className="space-y-2">
           <input
@@ -157,7 +167,7 @@ export default function Sidebar({ popularArticles = [], upcomingKajian = [] }: S
             type="submit"
             className="w-full bg-deep-navy text-white text-xs font-bold py-2 rounded hover:bg-black transition-colors uppercase tracking-wider"
           >
-            Daftar Gratis
+            {t('subscribeFree')}
           </button>
         </form>
       </div>

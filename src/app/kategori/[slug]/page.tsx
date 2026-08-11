@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { getCategoryWithArticles, getPopularArticles, getKajianList } from '@/lib/api';
 import Sidebar from '@/components/Sidebar';
 import { formatDateIndonesian } from '@/lib/date-utils';
+import { translateCategory } from '@/lib/i18n';
+import AutoTranslate from '@/components/AutoTranslate';
 
 export const revalidate = 0;
 
@@ -40,13 +42,15 @@ export default async function CategoryPage({ params }: PageProps) {
             Beranda
           </Link>
           <span>&gt;</span>
-          <span className="text-primary dark:text-white font-bold">{category.name}</span>
+          <span className="text-primary dark:text-white font-bold">
+            <AutoTranslate text={category.name} />
+          </span>
         </div>
         <h1 className="font-headline font-bold text-3xl md:text-4xl text-primary dark:text-white tracking-tight">
-          {category.name}
+          <AutoTranslate text={category.name} />
         </h1>
         <p className="text-xs text-on-surface-variant dark:text-gray-300 mt-1">
-          Panduan amaliah sehari-hari berdasarkan Al-Qur&apos;an dan As-Sunnah.
+          <AutoTranslate text="Panduan amaliah sehari-hari berdasarkan Al-Qur'an dan As-Sunnah." />
         </p>
       </div>
 
@@ -61,7 +65,7 @@ export default async function CategoryPage({ params }: PageProps) {
                 : 'bg-news-gray dark:bg-slate-800 text-on-surface dark:text-gray-200 border-outline-variant/40 hover:border-brass-gold'
             }`}
           >
-            {filter}
+            <AutoTranslate text={filter} />
           </button>
         ))}
       </div>
@@ -70,7 +74,7 @@ export default async function CategoryPage({ params }: PageProps) {
         <div className="lg:col-span-8 space-y-8">
           {articles.length === 0 ? (
             <div className="text-center py-12 bg-news-gray rounded-lg text-on-surface-variant">
-              Belum ada artikel yang diterbitkan dalam kategori ini.
+              <AutoTranslate text="Belum ada artikel yang diterbitkan dalam kategori ini." />
             </div>
           ) : (
             <>
@@ -84,16 +88,17 @@ export default async function CategoryPage({ params }: PageProps) {
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                       priority
+                      unoptimized
                     />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-deep-navy via-deep-navy/70 to-transparent"></div>
                   <div className="absolute bottom-0 left-0 p-6 text-white w-full space-y-2">
                     <span className="bg-brass-gold text-deep-navy font-bold text-[10px] px-2.5 py-0.5 rounded uppercase tracking-wider inline-block">
-                      {category.name}
+                      <AutoTranslate text={category.name} />
                     </span>
                     <h2 className="font-headline font-bold text-2xl md:text-3xl leading-snug hover:text-brass-gold transition-colors">
                       <Link href={`/artikel/${heroArticle.slug}`}>
-                        {heroArticle.title}
+                        <AutoTranslate text={heroArticle.title} />
                       </Link>
                     </h2>
                     <div className="flex items-center gap-3 text-xs text-gray-300">
@@ -120,19 +125,22 @@ export default async function CategoryPage({ params }: PageProps) {
                             alt={art.title}
                             fill
                             className="object-cover transition-transform duration-300 group-hover:scale-105"
+                            unoptimized
                           />
                         )}
                       </div>
                       <div className="p-4 flex flex-col flex-grow justify-between space-y-3">
                         <div>
                           <span className="text-[10px] font-bold text-brass-gold uppercase tracking-wider">
-                            {category.name}
+                            <AutoTranslate text={category.name} />
                           </span>
                           <h3 className="font-headline font-bold text-base text-primary dark:text-white group-hover:text-brass-gold transition-colors line-clamp-2 mt-1">
-                            <Link href={`/artikel/${art.slug}`}>{art.title}</Link>
+                            <Link href={`/artikel/${art.slug}`}>
+                              <AutoTranslate text={art.title} />
+                            </Link>
                           </h3>
                           <p className="text-xs text-on-surface-variant dark:text-gray-300 line-clamp-2 mt-2">
-                            {art.excerpt}
+                            <AutoTranslate text={art.excerpt} />
                           </p>
                         </div>
 

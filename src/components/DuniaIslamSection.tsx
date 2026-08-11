@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { formatDateIndonesian } from '@/lib/date-utils';
+import { useLanguage } from '@/context/LanguageContext';
+import AutoTranslate from './AutoTranslate';
 
 interface ArticleItem {
   id: number;
@@ -27,6 +29,7 @@ const SUB_TABS = [
 ];
 
 export default function DuniaIslamSection({ articles }: DuniaIslamSectionProps) {
+  const { language, t } = useLanguage();
   const [activeTab, setActiveTab] = useState(0);
 
   if (!articles || articles.length === 0) return null;
@@ -41,14 +44,14 @@ export default function DuniaIslamSection({ articles }: DuniaIslamSectionProps) 
   return (
     <section className="my-8">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="font-headline font-bold text-xl text-primary dark:text-white uppercase border-l-4 border-brass-gold pl-3 tracking-wide">
-          Dunia Islam
+        <h2 className="font-headline font-bold text-xl text-primary dark:text-white uppercase border-l-4 rtl:border-l-0 rtl:border-r-4 border-brass-gold pl-3 rtl:pl-0 rtl:pr-3 tracking-wide">
+          {t('navWorld')}
         </h2>
         <Link
           href="/kategori/dunia-islam"
           className="text-xs font-bold text-secondary dark:text-brass-gold hover:text-primary transition-colors flex items-center gap-1 uppercase tracking-wider"
         >
-          Lihat Semua <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+          {t('readMore')} <span className="material-symbols-outlined text-[14px] rtl:rotate-180">arrow_forward</span>
         </Link>
       </div>
 
@@ -64,7 +67,7 @@ export default function DuniaIslamSection({ articles }: DuniaIslamSectionProps) 
                 : 'bg-news-gray dark:bg-slate-800 text-on-surface-variant dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700'
             }`}
           >
-            {tab.label}
+            <AutoTranslate text={tab.label} />
           </button>
         ))}
       </div>
@@ -96,10 +99,12 @@ export default function DuniaIslamSection({ articles }: DuniaIslamSectionProps) 
             {/* Content */}
             <div className="flex-1 min-w-0 flex flex-col justify-center">
               <h3 className="font-headline font-bold text-sm sm:text-base leading-snug text-primary dark:text-white group-hover:text-brass-gold transition-colors line-clamp-2">
-                <Link href={`/artikel/${article.slug}`}>{article.title}</Link>
+                <Link href={`/artikel/${article.slug}`}>
+                  <AutoTranslate text={article.title} />
+                </Link>
               </h3>
               <span className="text-[11px] text-outline dark:text-gray-400 mt-1.5 font-medium">
-                {formatDateIndonesian(article.createdAt)}
+                {formatDateIndonesian(article.createdAt, language)}
               </span>
             </div>
           </article>
