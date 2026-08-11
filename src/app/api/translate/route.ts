@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server';
 // Server-side in-memory translation cache
 const serverCache: Record<string, string> = {};
 
+const BACKEND_API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const text = searchParams.get('text') || '';
@@ -20,7 +22,26 @@ export async function GET(request: Request) {
     return NextResponse.json({ translatedText: serverCache[cacheKey] });
   }
 
-  // 2. Try Google Translate GTX Endpoint (Server-Side)
+  // 2. Try Backend Express API — check if this text matches any article's
+  //    title/excerpt/content that's already been translated
+  try {
+    const backendUrl = `${BACKEND_API_URL}/translate/lookup?text=${encodeURIComponent(cleanText)}&lang=${target}`;
+    const response = await fetch(backendUrl, {
+      headers: { Accept: 'application/json' },
+      signal: AbortSignal.timeout(3000),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      if (data?.translatedText && data.translatedText.trim() !== '') {
+        serverCache[cacheKey] = data.translatedText;
+        return NextResponse.json({ translatedText: data.translatedText });
+      }
+    }
+  } catch {
+    // Backend lookup failed, continue to GTX
+  }
+
+  // 3. Try Google Translate GTX Endpoint (Server-Side)
   try {
     const gtxUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=id&tl=${target}&dt=t&q=${encodeURIComponent(cleanText)}`;
     const response = await fetch(gtxUrl, {
@@ -46,7 +67,7 @@ export async function GET(request: Request) {
     console.error('Server-side Google GTX error:', error);
   }
 
-  // 3. Fallback: MyMemory API (Server-Side)
+  // 4. Fallback: MyMemory API (Server-Side)
   try {
     const mmUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(cleanText)}&langpair=id|${target}`;
     const response = await fetch(mmUrl, {

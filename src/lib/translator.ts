@@ -3,8 +3,15 @@ import { Language } from './i18n';
 // Memory cache to store translated strings during session
 const translationCache: Record<string, string> = {};
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+
 /**
- * Translates dynamic text from Indonesian to target language (en or ar)
+ * Translates dynamic text from Indonesian to target language (en or ar).
+ * Priority:
+ * 1. In-memory cache
+ * 2. localStorage cache
+ * 3. Next.js API route (which queries backend + Google GTX)
+ * 4. Client-side Google GTX fallback
  */
 export async function translateText(text: string, targetLang: Language): Promise<string> {
   if (!text || text.trim() === '' || targetLang === 'id') {
@@ -47,7 +54,7 @@ export async function translateText(text: string, targetLang: Language): Promise
     console.warn('Internal server translation API error, trying client fallback...', error);
   }
 
-  // 4. Client-side fallback to Direct Google GTX
+  // 4. Client-side fallback to Direct Google GTX (last resort)
   try {
     const gtxUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=id&tl=${targetLang}&dt=t&q=${encodeURIComponent(cleanText)}`;
     const response = await fetch(gtxUrl);
@@ -67,6 +74,66 @@ export async function translateText(text: string, targetLang: Language): Promise
   }
 
   return cleanText;
+}
+
+/**
+ * Batch translate multiple texts at once.
+ * More efficient than translating one by one.
+ */
+export async function translateBatch(
+  texts: string[],
+  targetLang: Language
+): Promise<Record<string, string>> {
+  if (targetLang === 'id' || texts.length === 0) {
+    const result: Record<string, string> = {};
+    texts.forEach((t) => { result[t] = t; });
+    return result;
+  }
+
+  const results: Record<string, string> = {};
+  const uncached: string[] = [];
+
+  // Check cache first
+  for (const text of texts) {
+    const cleanText = text.trim();
+    if (!cleanText) {
+      results[text] = text;
+      continue;
+    }
+    const cacheKey = `${targetLang}:${cleanText}`;
+    if (translationCache[cacheKey]) {
+      results[text] = translationCache[cacheKey];
+    } else if (typeof window !== 'undefined') {
+      try {
+        const stored = localStorage.getItem(`trans_${cacheKey}`);
+        if (stored) {
+          translationCache[cacheKey] = stored;
+          results[text] = stored;
+        } else {
+          uncached.push(text);
+        }
+      } catch {
+        uncached.push(text);
+      }
+    } else {
+      uncached.push(text);
+    }
+  }
+
+  // Translate uncached texts in parallel with concurrency limit
+  if (uncached.length > 0) {
+    const BATCH_SIZE = 5;
+    for (let i = 0; i < uncached.length; i += BATCH_SIZE) {
+      const batch = uncached.slice(i, i + BATCH_SIZE);
+      const promises = batch.map(async (text) => {
+        const translated = await translateText(text, targetLang);
+        results[text] = translated;
+      });
+      await Promise.all(promises);
+    }
+  }
+
+  return results;
 }
 
 function cacheTranslation(cacheKey: string, result: string) {

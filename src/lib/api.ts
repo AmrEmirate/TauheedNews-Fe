@@ -18,30 +18,35 @@ export async function fetchApi(endpoint: string, options?: RequestInit) {
   }
 }
 
-export async function getHeadlineArticle() {
-  return await fetchApi('/articles/headline');
+export async function getHeadlineArticle(lang?: string) {
+  const query = lang && lang !== 'id' ? `?lang=${lang}` : '';
+  return await fetchApi(`/articles/headline${query}`);
 }
 
-export async function getFixedAdviceArticle() {
-  return await fetchApi('/articles/fixed-advice');
+export async function getFixedAdviceArticle(lang?: string) {
+  const query = lang && lang !== 'id' ? `?lang=${lang}` : '';
+  return await fetchApi(`/articles/fixed-advice${query}`);
 }
 
-export async function getArticles(params?: { category?: string; status?: string; limit?: number }) {
+export async function getArticles(params?: { category?: string; status?: string; limit?: number; lang?: string }) {
   const query = new URLSearchParams();
   if (params?.category) query.append('category', params.category);
   if (params?.status) query.append('status', params.status);
   if (params?.limit) query.append('limit', params.limit.toString());
+  if (params?.lang && params.lang !== 'id') query.append('lang', params.lang);
 
   const queryString = query.toString() ? `?${query.toString()}` : '';
   return (await fetchApi(`/articles${queryString}`)) || [];
 }
 
-export async function getArticleBySlug(slug: string) {
-  return await fetchApi(`/articles/${slug}`);
+export async function getArticleBySlug(slug: string, lang?: string) {
+  const query = lang && lang !== 'id' ? `?lang=${lang}` : '';
+  return await fetchApi(`/articles/${slug}${query}`);
 }
 
-export async function getPopularArticles() {
-  return (await fetchApi('/articles/popular')) || [];
+export async function getPopularArticles(lang?: string) {
+  const query = lang && lang !== 'id' ? `?lang=${lang}` : '';
+  return (await fetchApi(`/articles/popular${query}`)) || [];
 }
 
 export async function getCategories() {
@@ -71,4 +76,20 @@ export async function createArticle(data: any) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
+}
+
+/**
+ * Trigger translation for all untranslated articles
+ */
+export async function translateAllArticles() {
+  return await fetchApi('/translate/all', {
+    method: 'POST',
+  });
+}
+
+/**
+ * Get translation status
+ */
+export async function getTranslationStatus() {
+  return await fetchApi('/translate/status');
 }
