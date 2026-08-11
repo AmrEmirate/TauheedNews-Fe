@@ -12,7 +12,7 @@ export default async function CategoriesOverviewPage() {
   const allArticles = (await getArticles({ limit: 40 })) || [];
 
   return (
-    <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-6 md:py-10 space-y-8">
+    <div className="max-w-[1280px] mx-auto px-4 md:px-6 pt-3 pb-6 md:py-10 space-y-8">
       {/* Header */}
       <div className="border-b border-outline-variant/30 pb-4">
         <h1 className="font-headline font-bold text-2xl md:text-4xl text-primary dark:text-white uppercase tracking-wide border-l-4 border-brass-gold pl-3 rtl:border-l-0 rtl:border-r-4 rtl:pl-0 rtl:pr-3">

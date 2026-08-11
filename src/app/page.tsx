@@ -40,7 +40,7 @@ export default async function HomePage() {
   const latestArticles = allArticles.slice(0, 6);
 
   return (
-    <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-4 md:py-8">
+    <div className="max-w-[1280px] mx-auto px-4 md:px-6 pt-2 pb-6 md:py-8">
       {/* Hero Bento Section */}
       <HeroSection
         headlineArticle={headlineArticle}

@@ -94,7 +94,7 @@ export default function Header() {
 
       {/* Main Header */}
       <header className="bg-paper-white dark:bg-deep-navy border-b border-outline-variant/30 shadow-sm sticky top-0 z-40">
-        <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-3">
+        <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-2 md:py-3">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
               <button
