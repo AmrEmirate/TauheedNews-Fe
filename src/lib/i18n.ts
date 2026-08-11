@@ -452,6 +452,7 @@ export function translateCategory(
     'haramain-news': { id: 'Timur Tengah & Haramain', en: 'Middle East & Haramain', ar: 'الشرق الأوسط والحرمان' },
     'kajian-kitab': { id: 'Sejarah Islam & Kitab', en: 'Islamic History & Books', ar: 'التاريخ الإسلامي' },
     'fatwa-fikih': { id: 'Opini & Fatwa Fikih', en: 'Opinion & Fiqh Fatwa', ar: 'آراء وتحليلات' },
+    'analisis-klarifikasi': { id: 'Analisis & Klarifikasi', en: 'Analysis & Clarification', ar: 'تحليل وتوضيح' },
   };
 
   if (catSlug && categoryMap[catSlug]) {
