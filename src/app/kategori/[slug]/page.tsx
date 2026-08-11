@@ -39,7 +39,7 @@ export default async function CategoryPage({ params }: PageProps) {
       <div>
         <div className="flex items-center gap-2 text-xs text-outline dark:text-gray-400 font-semibold mb-2">
           <Link href="/" className="hover:underline">
-            Beranda
+            <AutoTranslate text="Beranda" />
           </Link>
           <span>&gt;</span>
           <span className="text-primary dark:text-white font-bold">
@@ -159,7 +159,7 @@ export default async function CategoryPage({ params }: PageProps) {
               {/* Load More Button matching blueprint */}
               <div className="pt-4 text-center">
                 <button className="w-full sm:w-auto px-8 py-3 rounded-md border border-outline-variant dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-news-gray text-xs font-bold text-primary dark:text-white transition-colors tracking-wider uppercase shadow-sm">
-                  Muat Lebih Banyak
+                  <AutoTranslate text="Muat Lebih Banyak" />
                 </button>
               </div>
             </>

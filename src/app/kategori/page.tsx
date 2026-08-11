@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getCategories, getArticles } from '@/lib/api';
 import { formatDateIndonesian } from '@/lib/date-utils';
+import AutoTranslate from '@/components/AutoTranslate';
 
 export const revalidate = 0;
 
@@ -14,11 +15,11 @@ export default async function CategoriesOverviewPage() {
     <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-6 md:py-10 space-y-8">
       {/* Header */}
       <div className="border-b border-outline-variant/30 pb-4">
-        <h1 className="font-headline font-bold text-2xl md:text-4xl text-primary dark:text-white uppercase tracking-wide border-l-4 border-brass-gold pl-3">
-          Kategori Berita &amp; Keilmuan Islam
+        <h1 className="font-headline font-bold text-2xl md:text-4xl text-primary dark:text-white uppercase tracking-wide border-l-4 border-brass-gold pl-3 rtl:border-l-0 rtl:border-r-4 rtl:pl-0 rtl:pr-3">
+          <AutoTranslate text="Kategori Berita & Keilmuan Islam" />
         </h1>
         <p className="text-xs md:text-sm text-on-surface-variant dark:text-gray-300 mt-2">
-          Jelajahi berbagai sajian informasi, tuntunan Islam, aqidah, kajian ulama, dan berita dunia Islam.
+          <AutoTranslate text="Jelajahi berbagai sajian informasi, tuntunan Islam, aqidah, kajian ulama, dan berita dunia Islam." />
         </p>
       </div>
 
@@ -35,11 +36,11 @@ export default async function CategoriesOverviewPage() {
                 <span className="material-symbols-outlined text-xl">folder_open</span>
               </div>
               <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brass-gold/15 text-brass-gold">
-                {cat._count?.articles || 0} Artikel
+                {cat._count?.articles || 0} <AutoTranslate text="Artikel" />
               </span>
             </div>
             <h2 className="font-headline font-bold text-sm md:text-base text-primary dark:text-white group-hover:text-brass-gold transition-colors line-clamp-1">
-              {cat.name}
+              <AutoTranslate text={cat.name} />
             </h2>
           </Link>
         ))}
@@ -54,15 +55,15 @@ export default async function CategoriesOverviewPage() {
           return (
             <section key={cat.id} className="space-y-4">
               <div className="flex justify-between items-center pb-2 border-b border-outline-variant/20">
-                <h3 className="font-headline font-bold text-lg md:text-xl text-primary dark:text-white uppercase border-l-4 border-brass-gold pl-3">
-                  {cat.name}
+                <h3 className="font-headline font-bold text-lg md:text-xl text-primary dark:text-white uppercase border-l-4 border-brass-gold pl-3 rtl:border-l-0 rtl:border-r-4 rtl:pl-0 rtl:pr-3">
+                  <AutoTranslate text={cat.name} />
                 </h3>
                 <Link
                   href={`/kategori/${cat.slug}`}
                   className="text-xs font-bold text-secondary dark:text-brass-gold hover:text-primary transition-colors flex items-center gap-1 uppercase tracking-wider"
                 >
-                  Lihat Semua ({cat._count?.articles || catArticles.length}){' '}
-                  <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+                  <AutoTranslate text="Lihat Semua" /> ({cat._count?.articles || catArticles.length}){' '}
+                  <span className="material-symbols-outlined text-[14px] rtl:rotate-180">arrow_forward</span>
                 </Link>
               </div>
 
@@ -85,7 +86,9 @@ export default async function CategoriesOverviewPage() {
                       )}
                     </div>
                     <h4 className="font-headline font-bold text-sm leading-snug group-hover:text-brass-gold transition-colors line-clamp-2 text-primary dark:text-white">
-                      <Link href={`/artikel/${art.slug}`}>{art.title}</Link>
+                      <Link href={`/artikel/${art.slug}`}>
+                        <AutoTranslate text={art.title} />
+                      </Link>
                     </h4>
                     <span className="text-[11px] font-semibold text-outline dark:text-gray-400 mt-auto pt-1">
                       {formatDateIndonesian(art.createdAt)}
