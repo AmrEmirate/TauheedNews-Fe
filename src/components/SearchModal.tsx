@@ -64,6 +64,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
         <form onSubmit={handleSubmit} className="flex items-center px-4 py-3 border-b border-outline-variant/30">
           <span className="material-symbols-outlined text-brass-gold mr-3 rtl:mr-0 rtl:ml-3">search</span>
           <input
+            suppressHydrationWarning
             type="text"
             placeholder={t('searchPlaceholder')}
             value={query}

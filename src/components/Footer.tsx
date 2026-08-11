@@ -134,6 +134,7 @@ export default function Footer() {
               </p>
               <form onSubmit={(e) => e.preventDefault()} className="space-y-2">
                 <input
+                  suppressHydrationWarning
                   type="email"
                   placeholder="Masukkan email Anda"
                   className="w-full text-xs p-2.5 rounded bg-white/10 border border-white/20 text-white placeholder:text-gray-400 outline-none focus:border-brass-gold"

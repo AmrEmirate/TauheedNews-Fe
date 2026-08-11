@@ -148,6 +148,7 @@ export default function Sidebar({ popularArticles = [], upcomingKajian = [] }: S
         </p>
         <form onSubmit={(e) => e.preventDefault()} className="space-y-2">
           <input
+            suppressHydrationWarning
             type="email"
             placeholder={t('searchPlaceholder')}
             className="w-full text-xs p-2.5 rounded bg-white border-none text-primary placeholder:text-gray-400 outline-none"

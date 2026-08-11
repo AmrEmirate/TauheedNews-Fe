@@ -47,6 +47,7 @@ function SearchPageContent() {
         <form onSubmit={handleSearchSubmit} className="relative flex items-center">
           <span className="material-symbols-outlined absolute left-4 text-outline">search</span>
           <input
+            suppressHydrationWarning
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
