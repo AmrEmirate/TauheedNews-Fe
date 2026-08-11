@@ -424,6 +424,16 @@ export const translations: Translations = {
     en: 'Next slide',
     ar: 'الشريحة التالية',
   },
+  menu: {
+    id: 'MENU',
+    en: 'MENU',
+    ar: 'القائمة',
+  },
+  emailInputPlaceholder: {
+    id: 'Masukkan email Anda...',
+    en: 'Enter your email address...',
+    ar: 'أدخل بريدك الإلكتروني...',
+  },
 };
 
 export function translateCategory(

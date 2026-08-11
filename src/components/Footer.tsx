@@ -53,7 +53,7 @@ export default function Footer() {
           {/* Col 2: Menu */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold text-brass-gold uppercase tracking-wider">
-              MENU
+              {t('menu')}
             </h4>
             <ul className="space-y-2 text-xs text-gray-300">
               <li>
@@ -136,7 +136,7 @@ export default function Footer() {
                 <input
                   suppressHydrationWarning
                   type="email"
-                  placeholder={t('searchPlaceholder')}
+                  placeholder={t('emailInputPlaceholder')}
                   className="w-full text-xs p-2.5 rounded bg-white/10 border border-white/20 text-white placeholder:text-gray-400 outline-none focus:border-brass-gold"
                 />
                 <button

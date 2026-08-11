@@ -160,7 +160,7 @@ export default function Sidebar({ popularArticles = [], upcomingKajian = [] }: S
           <input
             suppressHydrationWarning
             type="email"
-            placeholder={t('searchPlaceholder')}
+            placeholder={t('emailInputPlaceholder')}
             className="w-full text-xs p-2.5 rounded bg-white border-none text-primary placeholder:text-gray-400 outline-none"
           />
           <button
