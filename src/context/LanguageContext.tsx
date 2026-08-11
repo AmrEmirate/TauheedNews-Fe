@@ -24,10 +24,74 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [language, setLanguageState] = useState<Language>('id');
 
   useEffect(() => {
-    // Load language preference from localStorage
+    // 1. Check saved preference in localStorage
     const savedLang = localStorage.getItem('tauheed_news_lang') as Language;
     if (savedLang && (savedLang === 'id' || savedLang === 'en' || savedLang === 'ar')) {
       setLanguageState(savedLang);
+      return;
+    }
+
+    // 2. Auto-detect from Browser System Language
+    const sysLangs = typeof navigator !== 'undefined'
+      ? [navigator.language, ...(navigator.languages || [])].map((l) => l.toLowerCase())
+      : [];
+
+    const isSystemArabic = sysLangs.some((l) => l.startsWith('ar'));
+    const isSystemEnglish = sysLangs.some((l) => l.startsWith('en'));
+    const isSystemIndonesian = sysLangs.some((l) => l.startsWith('id') || l.startsWith('ms'));
+
+    if (isSystemArabic) {
+      setLanguageState('ar');
+      return;
+    }
+    if (isSystemEnglish) {
+      setLanguageState('en');
+      return;
+    }
+    if (isSystemIndonesian) {
+      setLanguageState('id');
+      return;
+    }
+
+    // 3. Fallback: Auto-detect from System Timezone
+    try {
+      const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      const arabTimezones = [
+        'Riyadh', 'Dubai', 'Cairo', 'Kuwait', 'Qatar', 'Amman',
+        'Muscat', 'Bahrain', 'Baghdad', 'Damascus', 'Casablanca',
+        'Tunis', 'Algiers', 'Khartoum', 'Aden', 'Gaza', 'Hebron'
+      ];
+      const isArabRegion = arabTimezones.some((tz) => timeZone.includes(tz));
+      if (isArabRegion) {
+        setLanguageState('ar');
+        return;
+      }
+    } catch (e) {
+      console.error('Timezone detection error:', e);
+    }
+
+    // 4. Asynchronous IP Geolocation Detection (Fast Fetch)
+    if (typeof window !== 'undefined') {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2000);
+
+      fetch('https://ipapi.co/json/', { signal: controller.signal })
+        .then((res) => res.json())
+        .then((data) => {
+          clearTimeout(timeoutId);
+          const country = (data.country_code || '').toUpperCase();
+          const arabCountries = ['SA', 'AE', 'EG', 'KW', 'QA', 'OM', 'BH', 'JO', 'LB', 'IQ', 'YE', 'MA', 'DZ', 'TN', 'LY', 'SD', 'SY', 'PS'];
+          const englishCountries = ['US', 'GB', 'AU', 'CA', 'NZ', 'IE', 'SG', 'PH'];
+
+          if (arabCountries.includes(country)) {
+            setLanguageState('ar');
+          } else if (englishCountries.includes(country)) {
+            setLanguageState('en');
+          }
+        })
+        .catch(() => {
+          clearTimeout(timeoutId);
+        });
     }
   }, []);
 
