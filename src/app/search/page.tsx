@@ -5,8 +5,12 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { searchArticles } from '@/lib/api';
+import { useLanguage } from '@/context/LanguageContext';
+import { translateCategory } from '@/lib/i18n';
+import AutoTranslate from '@/components/AutoTranslate';
 
 function SearchPageContent() {
+  const { language, t } = useLanguage();
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get('q') || 'Hukum Puasa Sunnah';
 
@@ -43,7 +47,7 @@ function SearchPageContent() {
     <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-8 space-y-8">
       {/* Centered Search Bar */}
       <div className="max-w-2xl mx-auto text-center space-y-4">
-        <p className="text-sm font-semibold text-outline dark:text-gray-400">Hasil Pencarian</p>
+        <p className="text-sm font-semibold text-outline dark:text-gray-400">{t('searchResults')}</p>
         <form onSubmit={handleSearchSubmit} className="relative flex items-center">
           <span className="material-symbols-outlined absolute left-4 text-outline">search</span>
           <input
@@ -51,13 +55,13 @@ function SearchPageContent() {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Cari kata kunci artikel, kajian, fatwa..."
+            placeholder={t('searchPlaceholder')}
             className="w-full pl-12 pr-4 py-3 rounded-lg border border-outline-variant dark:border-slate-700 bg-white dark:bg-slate-900 text-primary dark:text-white shadow-sm focus:border-brass-gold outline-none text-base"
           />
         </form>
         {activeQuery && (
           <p className="text-xs text-on-surface-variant dark:text-gray-300">
-            Menampilkan hasil untuk &quot;<strong className="text-primary dark:text-white">{activeQuery}</strong>&quot; ({results.length > 0 ? results.length : 12} hasil)
+            <AutoTranslate text={`Menampilkan hasil untuk "${activeQuery}" (${results.length > 0 ? results.length : 12} hasil)`} />
           </p>
         )}
       </div>
@@ -68,11 +72,11 @@ function SearchPageContent() {
           {loading ? (
             <div className="py-12 text-center text-outline flex items-center justify-center gap-2">
               <span className="material-symbols-outlined animate-spin text-brass-gold">sync</span>
-              Mencari artikel...
+              <AutoTranslate text="Mencari artikel..." />
             </div>
           ) : results.length === 0 ? (
             <div className="py-12 text-center text-outline">
-              <p>Tidak ada hasil yang ditemukan untuk pencarian ini.</p>
+              <p><AutoTranslate text="Tidak ada hasil yang ditemukan untuk pencarian ini." /></p>
             </div>
           ) : (
             <div className="space-y-6">
@@ -88,19 +92,22 @@ function SearchPageContent() {
                         alt={art.title}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        unoptimized
                       />
                     </div>
                   )}
                   <div className={`${art.coverImage ? 'sm:w-2/3' : 'w-full'} flex flex-col justify-between space-y-2`}>
                     <div>
                       <span className="text-[10px] font-bold text-brass-gold uppercase tracking-wider">
-                        {art.category?.name || 'Artikel'}
+                        {translateCategory(art.category, language) || 'Artikel'}
                       </span>
                       <h3 className="font-headline font-bold text-lg text-primary dark:text-white group-hover:text-brass-gold transition-colors line-clamp-2 mt-1">
-                        <Link href={`/artikel/${art.slug}`}>{art.title}</Link>
+                        <Link href={`/artikel/${art.slug}`}>
+                          <AutoTranslate text={art.title} />
+                        </Link>
                       </h3>
                       <p className="text-xs text-on-surface-variant dark:text-gray-300 line-clamp-2 mt-1">
-                        {art.excerpt}
+                        <AutoTranslate text={art.excerpt} />
                       </p>
                     </div>
                   </div>
@@ -134,30 +141,30 @@ function SearchPageContent() {
         <div className="lg:col-span-4 space-y-8">
           <div className="bg-paper-white dark:bg-slate-900 p-6 rounded-lg border border-outline-variant/40 shadow-sm space-y-6">
             <h3 className="font-bold text-sm text-primary dark:text-white uppercase tracking-wide border-b border-outline-variant/30 pb-2">
-              Filter Pencarian
+              <AutoTranslate text="Filter Pencarian" />
             </h3>
 
             {/* Category Filter */}
             <div className="space-y-3">
               <span className="text-xs font-bold uppercase text-brass-gold tracking-wider block">
-                KATEGORI
+                {t('navCategories')}
               </span>
               <div className="space-y-2 text-xs text-on-surface-variant dark:text-gray-300">
                 <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" defaultChecked className="rounded text-brass-gold focus:ring-brass-gold" />
-                  Semua Kategori
+                  <input suppressHydrationWarning type="checkbox" defaultChecked className="rounded text-brass-gold focus:ring-brass-gold" />
+                  <AutoTranslate text="Semua Kategori" />
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" className="rounded text-brass-gold focus:ring-brass-gold" />
-                  Tuntunan Islam
+                  <input suppressHydrationWarning type="checkbox" className="rounded text-brass-gold focus:ring-brass-gold" />
+                  {t('navGuidance')}
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" className="rounded text-brass-gold focus:ring-brass-gold" />
-                  Kajian Ulama
+                  <input suppressHydrationWarning type="checkbox" className="rounded text-brass-gold focus:ring-brass-gold" />
+                  {t('navUlama')}
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" className="rounded text-brass-gold focus:ring-brass-gold" />
-                  Fatwa
+                  <input suppressHydrationWarning type="checkbox" className="rounded text-brass-gold focus:ring-brass-gold" />
+                  {t('navOpinion')}
                 </label>
               </div>
             </div>
@@ -178,7 +185,7 @@ function SearchPageContent() {
                         : 'bg-news-gray dark:bg-slate-800 border-outline-variant/40 text-on-surface dark:text-gray-300 hover:border-brass-gold'
                     }`}
                   >
-                    {fmt}
+                    <AutoTranslate text={fmt} />
                   </button>
                 ))}
               </div>
@@ -188,7 +195,7 @@ function SearchPageContent() {
           {/* Paling Banyak Dibaca */}
           <div className="bg-paper-white dark:bg-slate-900 p-6 rounded-lg border border-outline-variant/40 shadow-sm space-y-4">
             <h3 className="font-headline font-bold text-base text-primary dark:text-white uppercase tracking-wide flex items-center gap-2 border-b border-outline-variant/30 pb-2">
-              <span className="material-symbols-outlined text-brass-gold text-lg">trending_up</span> Paling Banyak Dibaca
+              <span className="material-symbols-outlined text-brass-gold text-lg">trending_up</span> {t('popularArticles')}
             </h3>
             <div className="space-y-4">
               {popularArticles.map((pop: any, idx: number) => (
@@ -198,10 +205,12 @@ function SearchPageContent() {
                   </span>
                   <div>
                     <h4 className="text-xs font-bold text-primary dark:text-white leading-snug group-hover:text-brass-gold transition-colors">
-                      <Link href={`/artikel/${pop.slug}`}>{pop.title}</Link>
+                      <Link href={`/artikel/${pop.slug}`}>
+                        <AutoTranslate text={pop.title} />
+                      </Link>
                     </h4>
                     <span className="text-[10px] text-brass-gold font-semibold mt-1 block">
-                      {pop.category?.name || 'Kategori'}
+                      {translateCategory(pop.category, language) || 'Kategori'}
                     </span>
                   </div>
                 </div>

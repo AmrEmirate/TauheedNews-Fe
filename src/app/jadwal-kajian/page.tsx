@@ -2,6 +2,8 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getKajianList } from '@/lib/api';
+import { useLanguage } from '@/context/LanguageContext';
+import AutoTranslate from '@/components/AutoTranslate';
 
 export const revalidate = 0;
 
@@ -18,10 +20,10 @@ export default async function KajianSchedulePage() {
       {/* Header section matching blueprint */}
       <div className="text-center max-w-3xl mx-auto space-y-3">
         <h1 className="font-headline font-bold text-3xl md:text-4xl text-primary dark:text-white tracking-tight">
-          Jadwal Kajian Lengkap
+          <AutoTranslate text="Jadwal Kajian Lengkap" />
         </h1>
         <p className="text-xs md:text-sm text-on-surface-variant dark:text-gray-300">
-          Temukan jadwal majelis ilmu, kajian rutin harian dan mingguan dari para asatidzah.
+          <AutoTranslate text="Temukan jadwal majelis ilmu, kajian rutin harian dan mingguan dari para asatidzah." />
         </p>
         <p className="font-arabic text-2xl text-brass-gold pt-2">
           طَلَبُ الْعِلْمِ فَرِيضَةٌ عَلَى كُلِّ مُسْلِمٍ
@@ -39,7 +41,7 @@ export default async function KajianSchedulePage() {
                 : 'bg-white dark:bg-slate-800 text-on-surface dark:text-gray-200 border-outline-variant/40 hover:border-brass-gold'
             }`}
           >
-            {tab}
+            <AutoTranslate text={tab} />
           </button>
         ))}
       </div>
@@ -57,38 +59,39 @@ export default async function KajianSchedulePage() {
                   fill
                   className="object-cover"
                   priority
+                  unoptimized
                 />
                 <span className="absolute top-3 left-3 bg-brass-gold text-deep-navy font-bold text-[10px] px-2.5 py-1 rounded uppercase tracking-wider">
-                  Hari Ini
+                  <AutoTranslate text="Hari Ini" />
                 </span>
               </div>
               <div className="md:w-1/2 p-6 flex flex-col justify-between space-y-4">
                 <div className="space-y-3">
                   <div className="flex items-center gap-1.5 text-xs text-on-surface-variant dark:text-gray-400 font-medium">
                     <span className="material-symbols-outlined text-[16px] text-brass-gold">schedule</span>
-                    <span>Ba&apos;da Maghrib - Selesai</span>
+                    <span><AutoTranslate text="Ba'da Maghrib - Selesai" /></span>
                   </div>
                   <h3 className="font-headline font-bold text-xl text-primary dark:text-white leading-snug">
-                    {featuredKajian.title}
+                    <AutoTranslate text={featuredKajian.title} />
                   </h3>
                   <p className="text-xs text-brass-gold font-semibold">
-                    {featuredKajian.speaker}
+                    <AutoTranslate text={featuredKajian.speaker} />
                   </p>
                 </div>
 
                 <div className="pt-4 border-t border-outline-variant/30 flex justify-between items-center text-xs">
                   <span className="text-on-surface-variant dark:text-gray-400 flex items-center gap-1">
                     <span className="material-symbols-outlined text-[14px]">location_on</span>
-                    {featuredKajian.location}
+                    <AutoTranslate text={featuredKajian.location} />
                   </span>
                   <button className="text-brass-gold font-bold hover:underline flex items-center gap-1">
-                    Detail &rarr;
+                    <AutoTranslate text="Detail" /> &rarr;
                   </button>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="p-8 text-center bg-news-gray rounded-lg">Belum ada jadwal kajian.</div>
+            <div className="p-8 text-center bg-news-gray rounded-lg"><AutoTranslate text="Belum ada jadwal kajian." /></div>
           )}
         </div>
 
@@ -99,32 +102,32 @@ export default async function KajianSchedulePage() {
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
                   <span className="bg-news-gray dark:bg-slate-800 text-on-surface dark:text-gray-300 font-bold text-[10px] px-2.5 py-1 rounded uppercase">
-                    Rutin Pekanan
+                    <AutoTranslate text="Rutin Pekanan" />
                   </span>
                   <span className="material-symbols-outlined text-brass-gold">smart_display</span>
                 </div>
                 <h3 className="font-headline font-bold text-lg text-primary dark:text-white leading-snug">
-                  {otherKajian[0].title}
+                  <AutoTranslate text={otherKajian[0].title} />
                 </h3>
                 <p className="text-xs text-brass-gold font-semibold">
-                  {otherKajian[0].speaker}
+                  <AutoTranslate text={otherKajian[0].speaker} />
                 </p>
               </div>
 
               <div className="space-y-2 text-xs text-on-surface-variant dark:text-gray-300 border-t border-outline-variant/30 pt-3">
                 <p className="flex items-center gap-1.5">
-                  <span className="material-symbols-outlined text-[14px]">calendar_today</span> {otherKajian[0].dateTime || 'Setiap Pekan'}
+                  <span className="material-symbols-outlined text-[14px]">calendar_today</span> <AutoTranslate text={otherKajian[0].dateTime || 'Setiap Pekan'} />
                 </p>
                 <p className="flex items-center gap-1.5">
-                  <span className="material-symbols-outlined text-[14px]">schedule</span> {otherKajian[0].time || 'Waktu Menyesuaikan'}
+                  <span className="material-symbols-outlined text-[14px]">schedule</span> <AutoTranslate text={otherKajian[0].time || 'Waktu Menyesuaikan'} />
                 </p>
                 <p className="flex items-center gap-1.5">
-                  <span className="material-symbols-outlined text-[14px]">videocam</span> Live via YouTube
+                  <span className="material-symbols-outlined text-[14px]">videocam</span> <AutoTranslate text="Live via YouTube" />
                 </p>
               </div>
             </div>
           ) : (
-            <div className="p-8 text-center bg-news-gray rounded-lg h-full flex items-center justify-center">Belum ada kajian rutin.</div>
+            <div className="p-8 text-center bg-news-gray rounded-lg h-full flex items-center justify-center"><AutoTranslate text="Belum ada kajian rutin." /></div>
           )}
         </div>
       </div>
@@ -133,14 +136,14 @@ export default async function KajianSchedulePage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {otherKajian.slice(1).map((kajian: any, idx: number) => (
           <div key={kajian.id || idx} className="bg-paper-white dark:bg-slate-900 border border-outline-variant/40 rounded-lg p-5 shadow-sm space-y-3">
-            <span className="text-[10px] font-bold text-outline uppercase">{kajian.dateTime || 'Segera'}</span>
+            <span className="text-[10px] font-bold text-outline uppercase"><AutoTranslate text={kajian.dateTime || 'Segera'} /></span>
             <h4 className="font-headline font-bold text-base text-primary dark:text-white">
-              {kajian.title}
+              <AutoTranslate text={kajian.title} />
             </h4>
-            <p className="text-xs text-brass-gold font-medium">{kajian.speaker}</p>
+            <p className="text-xs text-brass-gold font-medium"><AutoTranslate text={kajian.speaker} /></p>
             <div className="text-xs text-outline space-y-1 pt-2 border-t border-outline-variant/20">
-              <p>{kajian.time || 'Waktu Menyesuaikan'}</p>
-              <p>{kajian.location}</p>
+              <p><AutoTranslate text={kajian.time || 'Waktu Menyesuaikan'} /></p>
+              <p><AutoTranslate text={kajian.location} /></p>
             </div>
           </div>
         ))}
@@ -149,7 +152,7 @@ export default async function KajianSchedulePage() {
       {/* Muat Lebih Banyak Button matching blueprint */}
       <div className="text-center pt-4">
         <button className="px-8 py-3 rounded-md border border-outline-variant dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-news-gray text-xs font-bold text-primary dark:text-white transition-colors tracking-wider uppercase shadow-sm">
-          MUAT LEBIH BANYAK
+          <AutoTranslate text="MUAT LEBIH BANYAK" />
         </button>
       </div>
     </div>

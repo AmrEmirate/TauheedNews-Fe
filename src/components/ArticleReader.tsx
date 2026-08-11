@@ -7,6 +7,7 @@ import { formatDateIndonesian } from '@/lib/date-utils';
 import { calculateReadingTime } from '@/lib/reading-time';
 import { useLanguage } from '@/context/LanguageContext';
 import { translateCategory } from '@/lib/i18n';
+import AutoTranslate from './AutoTranslate';
 
 interface ArticleData {
   id: number;
@@ -365,7 +366,9 @@ export default function ArticleReader({ article, relatedArticles }: ArticleReade
                     )}
                   </div>
                   <h4 className="font-headline font-bold text-[11px] md:text-sm text-primary dark:text-white group-hover:text-brass-gold transition-colors line-clamp-2 leading-tight">
-                    <Link href={`/artikel/${rel.slug}`}>{rel.title}</Link>
+                    <Link href={`/artikel/${rel.slug}`}>
+                      <AutoTranslate text={rel.title} />
+                    </Link>
                   </h4>
                   <span className="text-[10px] text-outline dark:text-gray-400">
                     {formatDateIndonesian(rel.createdAt, language)}

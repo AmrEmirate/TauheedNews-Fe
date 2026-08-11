@@ -4,6 +4,9 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { formatDateIndonesian } from '@/lib/date-utils';
+import { useLanguage } from '@/context/LanguageContext';
+import { translateCategory } from '@/lib/i18n';
+import AutoTranslate from '@/components/AutoTranslate';
 
 interface ArticleData {
   id: number;
@@ -18,6 +21,7 @@ interface ArticleData {
 }
 
 export default function BookmarksPage() {
+  const { language, t } = useLanguage();
   const [bookmarks, setBookmarks] = useState<ArticleData[]>([]);
 
   useEffect(() => {
@@ -41,25 +45,25 @@ export default function BookmarksPage() {
     <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-8">
       <div className="bg-deep-navy text-white p-8 rounded-lg mb-8 border-b-4 border-brass-gold shadow-md">
         <h1 className="font-headline font-bold text-3xl text-white uppercase tracking-wide flex items-center gap-2">
-          <span className="material-symbols-outlined text-brass-gold text-3xl">bookmark</span> Artikel Tersimpan
+          <span className="material-symbols-outlined text-brass-gold text-3xl">bookmark</span> {t('navBookmarks')}
         </h1>
         <p className="text-sm text-gray-300 mt-2">
-          Daftar bacaan artikel favorit yang Anda simpan di memori browser lokal.
+          <AutoTranslate text="Daftar bacaan artikel favorit yang Anda simpan di memori browser lokal." />
         </p>
       </div>
 
       {bookmarks.length === 0 ? (
         <div className="text-center py-16 bg-news-gray dark:bg-slate-900 rounded-lg space-y-3">
           <span className="material-symbols-outlined text-5xl text-outline">bookmark_border</span>
-          <h3 className="font-bold text-lg text-primary dark:text-white">Belum Ada Artikel Tersimpan</h3>
+          <h3 className="font-bold text-lg text-primary dark:text-white"><AutoTranslate text="Belum Ada Artikel Tersimpan" /></h3>
           <p className="text-xs text-on-surface-variant dark:text-gray-400">
-            Klik tombol &quot;Simpan&quot; saat membaca artikel untuk menambahkannya ke halaman ini.
+            <AutoTranslate text='Klik tombol "Simpan" saat membaca artikel untuk menambahkannya ke halaman ini.' />
           </p>
           <Link
             href="/"
             className="inline-block bg-brass-gold hover:bg-yellow-600 text-deep-navy font-bold px-4 py-2 rounded text-xs transition-colors mt-2"
           >
-            Jelajahi Beranda
+            {t('navHome')}
           </Link>
         </div>
       ) : (
@@ -76,30 +80,33 @@ export default function BookmarksPage() {
                     alt={art.title}
                     fill
                     className="object-cover"
+                    unoptimized
                   />
                 )}
               </div>
               <div className="p-4 space-y-2 flex-grow">
                 <span className="text-[10px] font-bold text-brass-gold uppercase tracking-wider">
-                  {art.category?.name || 'Artikel'}
+                  {translateCategory(art.category, language) || 'Artikel'}
                 </span>
                 <h3 className="font-headline font-bold text-base text-primary dark:text-white leading-snug line-clamp-2">
-                  <Link href={`/artikel/${art.slug}`}>{art.title}</Link>
+                  <Link href={`/artikel/${art.slug}`}>
+                    <AutoTranslate text={art.title} />
+                  </Link>
                 </h3>
                 <p className="text-xs text-on-surface-variant dark:text-gray-300 line-clamp-2">
-                  {art.excerpt}
+                  <AutoTranslate text={art.excerpt} />
                 </p>
               </div>
 
               <div className="p-4 pt-0 flex justify-between items-center text-xs">
                 <span className="text-outline text-[11px]">
-                  {art.createdAt ? formatDateIndonesian(art.createdAt) : ''}
+                  {art.createdAt ? formatDateIndonesian(art.createdAt, language) : ''}
                 </span>
                 <button
                   onClick={() => removeBookmark(art.slug)}
                   className="text-red-600 hover:text-red-800 text-[11px] font-bold flex items-center gap-1"
                 >
-                  <span className="material-symbols-outlined text-[14px]">delete</span> Hapus
+                  <span className="material-symbols-outlined text-[14px]">delete</span> <AutoTranslate text="Hapus" />
                 </button>
               </div>
             </div>

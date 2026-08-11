@@ -15,6 +15,7 @@ import CategorySection from '@/components/CategorySection';
 import HikmahSection from '@/components/HikmahSection';
 import DuniaIslamSection from '@/components/DuniaIslamSection';
 import KajianVideoSection from '@/components/KajianVideoSection';
+import LatestArticlesSection from '@/components/LatestArticlesSection';
 import Sidebar from '@/components/Sidebar';
 import { formatDateIndonesian } from '@/lib/date-utils';
 
@@ -83,53 +84,7 @@ export default async function HomePage() {
           />
 
           {/* Berita & Artikel Terbaru - hidden on mobile for cleaner view */}
-          <section className="hidden md:block pt-6 border-t-2 border-brass-gold">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="font-headline font-bold text-2xl text-primary dark:text-white uppercase border-l-4 border-brass-gold pl-3">
-                Berita & Artikel Terbaru
-              </h2>
-            </div>
-
-            <div className="space-y-6">
-              {latestArticles.map((art: any) => (
-                <article
-                  key={art.id}
-                  className="flex flex-col sm:flex-row gap-5 p-4 rounded-lg bg-paper-white dark:bg-slate-900 border border-outline-variant/40 hover:border-brass-gold/60 transition-all shadow-sm group"
-                >
-                  <div className="sm:w-1/3 aspect-video sm:h-36 relative overflow-hidden rounded-md bg-news-gray flex-shrink-0">
-                    {art.coverImage && (
-                      <Image
-                        src={art.coverImage}
-                        alt={art.title}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                    )}
-                  </div>
-                  <div className="sm:w-2/3 flex flex-col justify-between space-y-2">
-                    <div>
-                      <span className="text-[10px] font-bold text-brass-gold uppercase tracking-wider">
-                        {art.category?.name}
-                      </span>
-                      <h3 className="font-headline font-bold text-lg text-primary dark:text-white group-hover:text-brass-gold transition-colors line-clamp-2 mt-1">
-                        <Link href={`/artikel/${art.slug}`}>{art.title}</Link>
-                      </h3>
-                      <p className="text-xs text-on-surface-variant dark:text-gray-300 line-clamp-2 mt-1">
-                        {art.excerpt}
-                      </p>
-                    </div>
-
-                    <div className="flex justify-between items-center text-[11px] text-outline dark:text-gray-400 pt-2 border-t border-outline-variant/20">
-                      <span>{formatDateIndonesian(art.createdAt)}</span>
-                      <span className="font-semibold text-brass-gold">
-                        {art.author?.name}
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
+          <LatestArticlesSection articles={latestArticles} />
         </div>
 
         {/* Sidebar - hidden on mobile */}

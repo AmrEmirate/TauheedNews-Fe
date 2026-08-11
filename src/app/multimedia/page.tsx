@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { getMediaList } from '@/lib/api';
+import AutoTranslate from '@/components/AutoTranslate';
 
 export const revalidate = 0;
 
@@ -16,7 +17,7 @@ export default async function MultimediaPage() {
       {/* Header section matching blueprint */}
       <div className="space-y-1">
         <h1 className="font-headline font-bold text-3xl md:text-4xl text-primary dark:text-white tracking-tight">
-          Galeri Kajian
+          <AutoTranslate text="Galeri Kajian" />
         </h1>
       </div>
 
@@ -31,7 +32,7 @@ export default async function MultimediaPage() {
                 : 'bg-white dark:bg-slate-800 text-on-surface dark:text-gray-200 border-outline-variant/40 hover:border-brass-gold'
             }`}
           >
-            {tab}
+            <AutoTranslate text={tab} />
           </button>
         ))}
       </div>
@@ -45,6 +46,7 @@ export default async function MultimediaPage() {
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-500"
             priority
+            unoptimized
           />
           <div className="absolute inset-0 bg-gradient-to-t from-deep-navy via-deep-navy/60 to-transparent"></div>
 
@@ -57,16 +59,16 @@ export default async function MultimediaPage() {
 
           <div className="absolute bottom-0 left-0 p-6 text-white w-full space-y-2">
             <span className="bg-brass-gold text-deep-navy font-bold text-[10px] px-2.5 py-0.5 rounded uppercase tracking-wider inline-block">
-              Kajian Utama
+              <AutoTranslate text="Kajian Utama" />
             </span>
             <h2 className="font-headline font-bold text-2xl md:text-3xl leading-snug">
-              Memahami Esensi Tauhid Rububiyah dalam Kehidupan Modern
+              <AutoTranslate text={heroVideo.title} />
             </h2>
             <div className="flex items-center gap-4 text-xs text-gray-300">
-              <span>Ustadz Dr. Abdullah Zaen, Lc., MA</span>
+              <span><AutoTranslate text={heroVideo.speaker} /></span>
               <span>•</span>
               <span className="flex items-center gap-1">
-                <span className="material-symbols-outlined text-[14px]">schedule</span> 45:20
+                <span className="material-symbols-outlined text-[14px]">schedule</span> {heroVideo.duration || '45:20'}
               </span>
             </div>
           </div>
@@ -88,6 +90,7 @@ export default async function MultimediaPage() {
                     alt={item.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform opacity-80 group-hover:opacity-100"
+                    unoptimized
                   />
                 )}
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -102,13 +105,13 @@ export default async function MultimediaPage() {
 
               <div className="p-4 space-y-2 flex-grow">
                 <span className="text-[10px] font-bold text-brass-gold uppercase tracking-wider">
-                  {item.category || 'TAFSIR'}
+                  <AutoTranslate text={item.category || 'TAFSIR'} />
                 </span>
                 <h3 className="font-headline font-bold text-base text-primary dark:text-white leading-snug group-hover:text-brass-gold transition-colors line-clamp-2">
-                  {item.title}
+                  <AutoTranslate text={item.title} />
                 </h3>
                 <p className="text-xs text-on-surface-variant dark:text-gray-400">
-                  {item.speaker}
+                  <AutoTranslate text={item.speaker} />
                 </p>
               </div>
             </div>
@@ -116,7 +119,7 @@ export default async function MultimediaPage() {
         ) : (
           <div className="col-span-full py-12 text-center text-outline">
             <span className="material-symbols-outlined text-4xl mb-2 opacity-50">videocam_off</span>
-            <p>Belum ada video kajian yang tersedia.</p>
+            <p><AutoTranslate text="Belum ada video kajian yang tersedia." /></p>
           </div>
         )}
       </div>
@@ -124,7 +127,7 @@ export default async function MultimediaPage() {
       {/* Muat Lebih Banyak Button matching blueprint */}
       <div className="text-center pt-4">
         <button className="px-8 py-3 rounded-md border border-outline-variant dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-news-gray text-xs font-bold text-primary dark:text-white transition-colors tracking-wider uppercase shadow-sm">
-          Muat Lebih Banyak
+          <AutoTranslate text="Muat Lebih Banyak" />
         </button>
       </div>
     </div>
