@@ -71,7 +71,7 @@ export default function LatestArticlesSection({ articles }: { articles: ArticleI
               <div className="flex justify-between items-center text-[11px] text-outline dark:text-gray-400 pt-2 border-t border-outline-variant/20">
                 <span>{formatDateIndonesian(art.createdAt, language)}</span>
                 <span className="font-semibold text-brass-gold">
-                  {art.author?.name}
+                  <AutoTranslate text={art.author?.name || ''} />
                 </span>
               </div>
             </div>

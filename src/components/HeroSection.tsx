@@ -133,7 +133,7 @@ export default function HeroSection({ headlineArticle, subHeadlines }: HeroSecti
                   </span>
                   <span className="flex items-center gap-1">
                     <span className="material-symbols-outlined text-[12px] text-brass-gold">person</span>
-                    {slide.author?.name}
+                    <AutoTranslate text={slide.author?.name || ''} />
                   </span>
                 </div>
               </div>
@@ -208,7 +208,7 @@ export default function HeroSection({ headlineArticle, subHeadlines }: HeroSecti
                 </span>
                 <span className="flex items-center gap-1">
                   <span className="material-symbols-outlined text-[14px] text-brass-gold">person</span>{' '}
-                  {headlineArticle.author?.name}
+                  <AutoTranslate text={headlineArticle.author?.name || ''} />
                 </span>
               </div>
               <Link

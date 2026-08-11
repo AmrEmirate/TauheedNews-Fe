@@ -87,8 +87,12 @@ export default function Sidebar({ popularArticles = [], upcomingKajian = [] }: S
             <span className="material-symbols-outlined text-[16px]">person</span>
           </div>
           <div>
-            <p className="text-xs font-bold text-primary dark:text-white">Syaikh &apos;Abdul &apos;Aziz bin Baz</p>
-            <p className="text-[10px] text-brass-gold italic">Rahimahullah</p>
+            <p className="text-xs font-bold text-primary dark:text-white">
+              <AutoTranslate text="Syaikh 'Abdul 'Aziz bin Baz" />
+            </p>
+            <p className="text-[10px] text-brass-gold italic">
+              <AutoTranslate text="Rahimahullah" />
+            </p>
           </div>
         </div>
       </div>

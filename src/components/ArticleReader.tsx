@@ -260,7 +260,7 @@ export default function ArticleReader({ article, relatedArticles }: ArticleReade
             </span>
             <span className="flex items-center gap-1">
               <span className="material-symbols-outlined text-[14px] text-brass-gold">person</span>
-              {t('byAuthor')} {article.author?.name}
+              {t('byAuthor')} <AutoTranslate text={article.author?.name || ''} />
             </span>
             <span className="flex items-center gap-1">
               <span className="material-symbols-outlined text-[14px] text-brass-gold">schedule</span>
