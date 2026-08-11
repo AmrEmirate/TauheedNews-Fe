@@ -115,7 +115,7 @@ export default function HeroSection({ headlineArticle, subHeadlines }: HeroSecti
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
               
               <div className="absolute bottom-0 left-0 w-full p-4 pb-12 text-white">
-                <span className="bg-brass-gold text-deep-navy font-bold text-[10px] px-2 py-1 rounded uppercase tracking-wider inline-block mb-2">
+                <span suppressHydrationWarning className="bg-brass-gold text-deep-navy font-bold text-[10px] px-2 py-1 rounded uppercase tracking-wider inline-block mb-2">
                   {t('headline')}
                 </span>
                 <h2 className="font-headline font-bold text-xl leading-snug mb-2 line-clamp-3">
