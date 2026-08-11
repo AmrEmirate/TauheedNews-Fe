@@ -17,9 +17,9 @@ export default function BottomNav() {
   const navItems = [
     { label: t('navHome'), icon: 'home', href: '/' },
     { label: t('navCategories'), icon: 'grid_view', href: '/kategori' },
-    { label: 'Video', icon: 'play_circle', href: '/multimedia' },
+    { label: t('navVideo'), icon: 'play_circle', href: '/multimedia' },
     { label: t('navSchedule'), icon: 'menu_book', href: '/jadwal-kajian' },
-    { label: 'Menu', icon: 'menu', href: '#menu' },
+    { label: t('menu'), icon: 'menu', href: '#menu' },
   ];
 
   const isActive = (href: string) => {

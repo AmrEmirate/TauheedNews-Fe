@@ -87,6 +87,11 @@ export const translations: Translations = {
     en: 'MULTIMEDIA',
     ar: 'الوسائط المتعددة',
   },
+  navVideo: {
+    id: 'VIDEO',
+    en: 'VIDEO',
+    ar: 'فيديو',
+  },
   navCategories: {
     id: 'KATEGORI',
     en: 'CATEGORIES',
