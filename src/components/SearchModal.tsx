@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { searchArticles } from '@/lib/api';
 import { useLanguage } from '@/context/LanguageContext';
+import { translateCategory } from '@/lib/i18n';
+import AutoTranslate from './AutoTranslate';
 
 interface ArticleItem {
   id: number;
@@ -22,7 +24,7 @@ interface SearchModalProps {
 }
 
 export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<ArticleItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -85,7 +87,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
           {loading && (
             <div className="py-8 text-center text-outline flex items-center justify-center gap-2">
               <span className="material-symbols-outlined animate-spin text-brass-gold">sync</span>
-              Mencari...
+              <AutoTranslate text="Mencari..." />
             </div>
           )}
 
@@ -113,13 +115,13 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   className="block p-3 rounded-md hover:bg-news-gray dark:hover:bg-slate-800 transition-colors border border-transparent hover:border-brass-gold/30"
                 >
                   <span className="text-xs uppercase font-semibold text-brass-gold tracking-wider">
-                    {item.category?.name}
+                    {translateCategory(item.category, language)}
                   </span>
                   <h4 className="font-bold text-on-surface dark:text-white text-base mt-1 line-clamp-1">
-                    {item.title}
+                    <AutoTranslate text={item.title} />
                   </h4>
                   <p className="text-sm text-on-surface-variant line-clamp-2 mt-1">
-                    {item.excerpt}
+                    <AutoTranslate text={item.excerpt} />
                   </p>
                 </Link>
               ))}
