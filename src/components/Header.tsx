@@ -154,22 +154,6 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile Tab Navigation - Horizontal scrollable */}
-        <div className="md:hidden bg-deep-green text-white">
-          <nav className="flex overflow-x-auto mobile-tab-nav">
-            {navLinks.map((link, idx) => (
-              <Link
-                key={link.href + idx}
-                href={link.href}
-                className={`text-[11px] font-bold whitespace-nowrap px-3.5 py-2.5 hover:text-brass-gold transition-colors tracking-wider flex items-center gap-1 flex-shrink-0 ${
-                  idx === 0 ? 'bg-white/10' : ''
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
-          </nav>
-        </div>
 
         {/* Desktop Navigation Bar */}
         <div className="bg-deep-green text-white hidden md:block">
