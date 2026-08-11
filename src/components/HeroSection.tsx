@@ -32,10 +32,8 @@ export default function HeroSection({ headlineArticle, subHeadlines }: HeroSecti
   const scrollRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  if (!headlineArticle) return null;
-
   // Combine headline + sub headlines for mobile carousel
-  const allSlides = [headlineArticle, ...subHeadlines];
+  const allSlides = headlineArticle ? [headlineArticle, ...subHeadlines] : [];
 
   const goToSlide = useCallback((index: number) => {
     if (scrollRef.current) {
@@ -50,24 +48,29 @@ export default function HeroSection({ headlineArticle, subHeadlines }: HeroSecti
   }, []);
 
   const nextSlide = useCallback(() => {
+    if (allSlides.length === 0) return;
     const next = (currentSlide + 1) % allSlides.length;
     goToSlide(next);
   }, [currentSlide, allSlides.length, goToSlide]);
 
   const prevSlide = useCallback(() => {
+    if (allSlides.length === 0) return;
     const prev = (currentSlide - 1 + allSlides.length) % allSlides.length;
     goToSlide(prev);
   }, [currentSlide, allSlides.length, goToSlide]);
 
   // Auto-play timer
   useEffect(() => {
+    if (allSlides.length === 0) return;
     timerRef.current = setInterval(() => {
       nextSlide();
     }, 5000);
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [nextSlide]);
+  }, [nextSlide, allSlides.length]);
+
+  if (!headlineArticle) return null;
 
   // Handle scroll for dot indicator sync
   const handleScroll = () => {
