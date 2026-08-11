@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Language, translations } from '@/lib/i18n';
-import { translateText } from '@/lib/translator';
+import { translateText, purgeStaleCache } from '@/lib/translator';
 
 interface LanguageContextType {
   language: Language;
@@ -24,6 +24,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [language, setLanguageState] = useState<Language>('id');
 
   useEffect(() => {
+    purgeStaleCache();
     // 1. Check saved preference in localStorage
     const savedLang = localStorage.getItem('tauheed_news_lang') as Language;
     if (savedLang && (savedLang === 'id' || savedLang === 'en' || savedLang === 'ar')) {
@@ -113,6 +114,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const setLanguage = (newLang: Language) => {
     setLanguageState(newLang);
+    purgeStaleCache();
     if (typeof window !== 'undefined') {
       localStorage.setItem('tauheed_news_lang', newLang);
     }

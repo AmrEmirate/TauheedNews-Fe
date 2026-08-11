@@ -21,16 +21,16 @@ export async function translateText(text: string, targetLang: Language): Promise
   const cleanText = text.trim();
   const cacheKey = `${targetLang}:${cleanText}`;
 
-  // 1. Check in-memory cache
-  if (translationCache[cacheKey]) {
+  // 1. Check in-memory cache (only if actually translated)
+  if (translationCache[cacheKey] && translationCache[cacheKey] !== cleanText) {
     return translationCache[cacheKey];
   }
 
-  // 2. Check localStorage cache
+  // 2. Check localStorage cache (only if actually translated)
   if (typeof window !== 'undefined') {
     try {
       const stored = localStorage.getItem(`trans_${cacheKey}`);
-      if (stored) {
+      if (stored && stored.trim() !== '' && stored !== cleanText) {
         translationCache[cacheKey] = stored;
         return stored;
       }
@@ -137,12 +137,46 @@ export async function translateBatch(
 }
 
 function cacheTranslation(cacheKey: string, result: string) {
-  translationCache[cacheKey] = result;
-  if (typeof window !== 'undefined') {
-    try {
-      localStorage.setItem(`trans_${cacheKey}`, result);
-    } catch {
-      // Ignore storage errors
+  if (!result || result.trim() === '') return;
+  // Extract original text from cacheKey (format: "lang:cleanText")
+  const colonIdx = cacheKey.indexOf(':');
+  const originalText = colonIdx !== -1 ? cacheKey.substring(colonIdx + 1) : '';
+
+  // Only store if the result is actually translated (different from original)
+  if (result !== originalText) {
+    translationCache[cacheKey] = result;
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem(`trans_${cacheKey}`, result);
+      } catch {
+        // Ignore storage errors
+      }
     }
+  }
+}
+
+/**
+ * Purge any stale untranslated strings (where stored value equals original text)
+ */
+export function purgeStaleCache() {
+  if (typeof window === 'undefined') return;
+  try {
+    const keysToRemove: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('trans_')) {
+        const val = localStorage.getItem(key);
+        const originalText = key.substring(key.indexOf(':') + 1);
+        if (val === originalText) {
+          keysToRemove.push(key);
+        }
+      }
+    }
+    keysToRemove.forEach((k) => {
+      localStorage.removeItem(k);
+      delete translationCache[k.substring(6)];
+    });
+  } catch {
+    // Ignore storage errors
   }
 }
