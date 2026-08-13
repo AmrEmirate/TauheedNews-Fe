@@ -33,6 +33,7 @@ export default async function HomePage() {
     .filter((a: any) => a.id !== headlineArticle?.id)
     .slice(0, 2);
 
+  const saudiArticles = await getArticles({ category: 'saudi-arabia-terkini', limit: 4 });
   const tuntunanIslamArticles = await getArticles({ category: 'tuntunan-islam', limit: 4 });
   const aqidahArticles = await getArticles({ category: 'aqidah-tauhid', limit: 4 });
   const fatwaArticles = await getArticles({ category: 'fatwa-fikih', limit: 4 });
@@ -50,6 +51,13 @@ export default async function HomePage() {
       {/* Main Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className="lg:col-span-8 space-y-2 md:space-y-10">
+          {/* Berita Saudi Arabia Section */}
+          <CategorySection
+            title="Berita Saudi Arabia"
+            slug="saudi-arabia-terkini"
+            articles={saudiArticles.length > 0 ? saudiArticles : allArticles.slice(0, 4)}
+          />
+
           {/* Tuntunan Islam - horizontal scroll on mobile */}
           <CategorySection
             title="Tuntunan Islam"

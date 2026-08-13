@@ -454,10 +454,14 @@ export function translateCategory(
     'aqidah-tauhid': { id: 'Aqidah & Tauhid', en: 'Aqidah & Tauheed', ar: 'العقيدة والتوحيد' },
     'ulama-warisan-ilmu': { id: 'Ulama & Warisan Ilmu', en: 'Scholars & Knowledge', ar: 'دروس العلماء' },
     'dunia-islam': { id: 'Dunia Islam', en: 'Islamic World', ar: 'العالم الإسلامي' },
-    'haramain-news': { id: 'Timur Tengah & Haramain', en: 'Middle East & Haramain', ar: 'الشرق الأوسط والحرمان' },
+    'haramain-news': { id: 'Haramain & Umrah', en: 'Haramain & Umrah', ar: 'الحرمين والعمرة' },
     'kajian-kitab': { id: 'Sejarah Islam & Kitab', en: 'Islamic History & Books', ar: 'التاريخ الإسلامي' },
     'fatwa-fikih': { id: 'Opini & Fatwa Fikih', en: 'Opinion & Fiqh Fatwa', ar: 'آراء وتحليلات' },
     'analisis-klarifikasi': { id: 'Analisis & Klarifikasi', en: 'Analysis & Clarification', ar: 'تحليل وتوضيح' },
+    'saudi-arabia-terkini': { id: 'Saudi Arabia Terkini', en: 'Saudi Arabia News', ar: 'أخبار المملكة العربية السعودية' },
+    'diplomasi-kerja-sama': { id: 'Diplomasi & Kerja Sama', en: 'Diplomacy & Cooperation', ar: 'الدبلوماسية والتعاون' },
+    'bantuan-kemanusiaan': { id: 'Bantuan Kemanusiaan', en: 'Humanitarian Aid', ar: 'المساعدات الإنسانية' },
+    'vision-2030-proyek': { id: 'Vision 2030 & Proyek', en: 'Vision 2030 & Projects', ar: 'رؤية 2030 والمشاريع' },
   };
 
   if (catSlug && categoryMap[catSlug]) {
