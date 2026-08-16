@@ -38,12 +38,13 @@ export default function BottomNav() {
   };
 
   const quickLinks = [
-    { name: t('navGuidance'), href: '/kategori/tuntunan-islam', icon: 'menu_book' },
-    { name: t('navAqidah'), href: '/kategori/aqidah-tauhid', icon: 'auto_stories' },
-    { name: t('navUlama'), href: '/kategori/ulama-warisan-ilmu', icon: 'school' },
-    { name: t('navWorld'), href: '/kategori/dunia-islam', icon: 'public' },
-    { name: t('navOpinion'), href: '/kategori/fatwa-fikih', icon: 'gavel' },
-    { name: t('navMiddleEast'), href: '/kategori/haramain-news', icon: 'mosque' },
+    { name: t('saudiNews'), href: '/kategori/saudi-arabia-terkini', icon: 'flag' },
+    { name: t('islamicWorld'), href: '/kategori/dunia-islam', icon: 'public' },
+    { name: t('fatwaLajnah'), href: '/kategori/fatwa-fikih', icon: 'gavel' },
+    { name: t('islamicGuidance'), href: '/kategori/tuntunan-islam', icon: 'menu_book' },
+    { name: t('sunnahLecturesVideos'), href: '/multimedia', icon: 'play_circle' },
+    { name: t('aqidahTauhid'), href: '/kategori/aqidah-tauhid', icon: 'auto_stories' },
+    { name: t('opinionSection'), href: '/kategori/opini', icon: 'rate_review' },
     { name: t('navBookmarks'), href: '/bookmark', icon: 'bookmark' },
     { name: t('navAbout'), href: '/tentang-kami', icon: 'info' },
     { name: t('navAdmin'), href: '/admin', icon: 'admin_panel_settings' },

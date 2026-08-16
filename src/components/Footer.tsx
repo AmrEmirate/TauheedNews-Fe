@@ -62,23 +62,38 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/kategori/tuntunan-islam" className="hover:text-brass-gold transition-colors">
-                  {t('navGuidance')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/kategori/aqidah-tauhid" className="hover:text-brass-gold transition-colors">
-                  {t('navAqidah')}
-                </Link>
-              </li>
-              <li>
-                <Link href="/kategori/ulama-warisan-ilmu" className="hover:text-brass-gold transition-colors">
-                  {t('navUlama')}
+                <Link href="/kategori/saudi-arabia-terkini" className="hover:text-brass-gold transition-colors">
+                  {t('saudiNews')}
                 </Link>
               </li>
               <li>
                 <Link href="/kategori/dunia-islam" className="hover:text-brass-gold transition-colors">
-                  {t('navWorld')}
+                  {t('islamicWorld')}
+                </Link>
+              </li>
+              <li>
+                <Link href="/kategori/fatwa-fikih" className="hover:text-brass-gold transition-colors">
+                  {t('fatwaLajnah')}
+                </Link>
+              </li>
+              <li>
+                <Link href="/kategori/tuntunan-islam" className="hover:text-brass-gold transition-colors">
+                  {t('islamicGuidance')}
+                </Link>
+              </li>
+              <li>
+                <Link href="/multimedia" className="hover:text-brass-gold transition-colors">
+                  {t('sunnahLecturesVideos')}
+                </Link>
+              </li>
+              <li>
+                <Link href="/kategori/aqidah-tauhid" className="hover:text-brass-gold transition-colors">
+                  {t('aqidahTauhid')}
+                </Link>
+              </li>
+              <li>
+                <Link href="/kategori/opini" className="hover:text-brass-gold transition-colors">
+                  {t('opinionSection')}
                 </Link>
               </li>
             </ul>

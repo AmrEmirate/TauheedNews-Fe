@@ -35,13 +35,13 @@ export default function Header() {
 
   const navLinks = [
     { name: t('navHome'), href: '/', icon: 'home' },
-    { name: t('navGuidance'), href: '/kategori/tuntunan-islam' },
-    { name: t('navAqidah'), href: '/kategori/aqidah-tauhid' },
-    { name: t('navUlama'), href: '/kategori/ulama-warisan-ilmu' },
-    { name: t('navWorld'), href: '/kategori/dunia-islam' },
-    { name: t('navMiddleEast'), href: '/kategori/haramain-news' },
-    { name: t('navHistory'), href: '/kategori/kajian-kitab' },
-    { name: t('navOpinion'), href: '/kategori/fatwa-fikih' },
+    { name: t('saudiNews'), href: '/kategori/saudi-arabia-terkini', icon: 'flag' },
+    { name: t('islamicWorld'), href: '/kategori/dunia-islam', icon: 'public' },
+    { name: t('fatwaLajnah'), href: '/kategori/fatwa-fikih', icon: 'gavel' },
+    { name: t('islamicGuidance'), href: '/kategori/tuntunan-islam', icon: 'menu_book' },
+    { name: t('sunnahLecturesVideos'), href: '/multimedia', icon: 'play_circle' },
+    { name: t('aqidahTauhid'), href: '/kategori/aqidah-tauhid', icon: 'auto_stories' },
+    { name: t('opinionSection'), href: '/kategori/opini', icon: 'rate_review' },
   ];
 
   return (

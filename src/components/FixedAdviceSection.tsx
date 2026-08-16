@@ -31,8 +31,8 @@ export default function FixedAdviceSection({ article }: FixedAdviceSectionProps)
 
   return (
     <section className="bg-gradient-to-r from-deep-navy to-deep-green text-white rounded-lg p-6 my-8 border-2 border-brass-gold shadow-lg relative overflow-hidden">
-      <div className="absolute top-0 right-0 bg-brass-gold text-deep-navy font-bold text-xs px-3 py-1 rounded-bl-lg uppercase tracking-wider flex items-center gap-1">
-        <span className="material-symbols-outlined text-[14px]">push_pin</span> {t('fixedAdvice')}
+      <div className="absolute top-0 right-0 bg-brass-gold text-deep-navy font-bold text-xs px-3.5 py-1.5 rounded-bl-lg uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
+        <span className="material-symbols-outlined text-[15px]">auto_stories</span> {t('landasanTauhid')}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
