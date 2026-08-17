@@ -33,11 +33,14 @@ export default async function HomePage() {
 
   // 1. Saudi Arabia News
   const saudiArticles = await getArticles({ category: 'saudi-arabia-terkini', limit: 4 });
+
+  // 2. Haramain News
+  const haramainArticles = await getArticles({ category: 'haramain-news', limit: 4 });
   
-  // 2. Islamic World
+  // 3. Islamic World
   const duniaIslamArticles = await getArticles({ category: 'dunia-islam', limit: 6 });
   
-  // 3. Al-Lajnah Ad-Da'imah Fiqh Fatwa
+  // 4. Al-Lajnah Ad-Da'imah Fiqh Fatwa
   const fatwaArticles = await getArticles({ category: 'fatwa-fikih', limit: 4 });
   
   // 5. Islamic Guidance
@@ -67,7 +70,14 @@ export default async function HomePage() {
             articles={saudiArticles.length > 0 ? saudiArticles : allArticles.slice(0, 4)}
           />
 
-          {/* 2. Islamic World (Islamic Word) */}
+          {/* 2. Haramain News (Berita Haramain & Haji/Umrah) */}
+          <CategorySection
+            title="Haramain News"
+            slug="haramain-news"
+            articles={haramainArticles}
+          />
+
+          {/* 3. Islamic World (Islamic Word) */}
           <DuniaIslamSection articles={duniaIslamArticles} />
 
           {/* 3. Al Laznah Ad Da'imah Fiqh Fatwa */}

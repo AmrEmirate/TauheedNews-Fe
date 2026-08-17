@@ -248,6 +248,11 @@ export const translations: Translations = {
     en: 'Saudi Arabia News',
     ar: 'أخبار المملكة العربية السعودية',
   },
+  haramainNews: {
+    id: 'Haramain News',
+    en: 'Haramain News',
+    ar: 'أخبار الحرمين',
+  },
   islamicWorld: {
     id: 'Islamic World',
     en: 'Islamic World',
