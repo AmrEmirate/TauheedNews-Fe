@@ -1,17 +1,18 @@
 export function getApiBaseUrl(): string {
   if (typeof window === 'undefined') {
     // Server-side in Next.js Server Components
-    if (process.env.INTERNAL_API_URL) {
+    if (process.env.INTERNAL_API_URL && !process.env.INTERNAL_API_URL.includes('127.0.0.1')) {
       return process.env.INTERNAL_API_URL;
     }
-    if (process.env.NEXT_PUBLIC_API_URL && process.env.NEXT_PUBLIC_API_URL.startsWith('http')) {
+    if (process.env.NEXT_PUBLIC_API_URL && process.env.NEXT_PUBLIC_API_URL.startsWith('http') && !process.env.NEXT_PUBLIC_API_URL.includes('127.0.0.1')) {
       return process.env.NEXT_PUBLIC_API_URL;
     }
     return 'https://api.tauheednews.com/api';
   }
   // Client-side in browser
-  return process.env.NEXT_PUBLIC_API_URL || '/api-backend';
+  return process.env.NEXT_PUBLIC_API_URL || 'https://api.tauheednews.com/api';
 }
+
 
 
 export async function fetchApi(endpoint: string, options?: RequestInit) {
