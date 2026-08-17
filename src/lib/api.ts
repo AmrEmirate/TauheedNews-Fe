@@ -1,14 +1,24 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+export function getApiBaseUrl(): string {
+  if (typeof window === 'undefined') {
+    // Server-side in Next.js Server Components
+    return process.env.INTERNAL_API_URL || 'http://127.0.0.1:5000/api';
+  }
+  // Client-side in browser
+  return process.env.NEXT_PUBLIC_API_URL || '/api-backend';
+}
 
 export async function fetchApi(endpoint: string, options?: RequestInit) {
   try {
-    const res = await fetch(`${API_BASE_URL}${endpoint}`, {
+    const baseUrl = getApiBaseUrl();
+    const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    const url = `${baseUrl}${cleanEndpoint}`;
+    const res = await fetch(url, {
       cache: 'no-store',
       ...options,
     });
 
     if (!res.ok) {
-      throw new Error(`API Error: ${res.statusText}`);
+      throw new Error(`API Error: ${res.status} ${res.statusText}`);
     }
 
     return await res.json();
@@ -17,6 +27,7 @@ export async function fetchApi(endpoint: string, options?: RequestInit) {
     return null;
   }
 }
+
 
 export async function getHeadlineArticle(lang?: string) {
   const query = lang && lang !== 'id' ? `?lang=${lang}` : '';

@@ -20,12 +20,6 @@ const QUOTES = [
     photo: '/masyayikh/utsaimin.png',
   },
   {
-    quote: 'Ilmu itu diambil dari lisan para ulama, bukan hanya dari membaca lembaran buku.',
-    author: 'Syaikh Muhammad Nasiruddin Al-Albani',
-    title: 'Rahimahullah',
-    photo: '/masyayikh/albani.png',
-  },
-  {
     quote: 'Istiqamah di atas sunnah adalah kemuliaan tertinggi yang dikejar oleh setiap mukmin.',
     author: 'Syaikh Salih bin Fauzan Al-Fauzan',
     title: 'Hafizhahullah',

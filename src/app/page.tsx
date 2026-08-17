@@ -70,15 +70,15 @@ export default async function HomePage() {
             articles={saudiArticles.length > 0 ? saudiArticles : allArticles.slice(0, 4)}
           />
 
-          {/* 2. Haramain News (Berita Haramain & Haji/Umrah) */}
+          {/* 2. Islamic World */}
+          <DuniaIslamSection articles={duniaIslamArticles} />
+
+          {/* 3. Haramain News (Berita Haramain & Haji/Umrah) */}
           <CategorySection
             title="Haramain News"
             slug="haramain-news"
             articles={haramainArticles}
           />
-
-          {/* 3. Islamic World (Islamic Word) */}
-          <DuniaIslamSection articles={duniaIslamArticles} />
 
           {/* 3. Al Laznah Ad Da'imah Fiqh Fatwa */}
           <CategorySection

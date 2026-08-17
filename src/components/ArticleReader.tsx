@@ -80,39 +80,36 @@ export default function ArticleReader({ article, relatedArticles }: ArticleReade
 
     setIsTranslating(true);
 
-    const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-
     // Try to fetch pre-translated article from backend first
-    fetch(`${API_BASE_URL}/articles/${encodeURIComponent(article.slug)}?lang=${language}`)
-      .then((res) => {
-        if (!res.ok) throw new Error('Backend fetch failed');
-        return res.json();
-      })
-      .then((data) => {
-        if (isMounted && data?._isTranslated) {
-          setTranslatedTitle(data.title);
-          setTranslatedContent(data.content);
-          setIsTranslating(false);
-        } else {
-          throw new Error('No backend translation available');
-        }
-      })
-      .catch(() => {
-        // Fallback: translate via translateDynamic (Google GTX)
-        if (!isMounted) return;
-        Promise.all([
-          translateDynamic(article.title),
-          translateDynamic(article.content),
-        ]).then(([titleRes, contentRes]) => {
-          if (isMounted) {
-            setTranslatedTitle(titleRes);
-            setTranslatedContent(contentRes);
+    import('@/lib/api').then(({ getArticleBySlug }) => {
+      getArticleBySlug(article.slug, language)
+        .then((data) => {
+          if (isMounted && data?._isTranslated) {
+            setTranslatedTitle(data.title);
+            setTranslatedContent(data.content);
             setIsTranslating(false);
+          } else {
+            throw new Error('No backend translation available');
           }
-        }).catch(() => {
-          if (isMounted) setIsTranslating(false);
+        })
+        .catch(() => {
+          // Fallback: translate via translateDynamic (Google GTX)
+          if (!isMounted) return;
+          Promise.all([
+            translateDynamic(article.title),
+            translateDynamic(article.content),
+          ]).then(([titleRes, contentRes]) => {
+            if (isMounted) {
+              setTranslatedTitle(titleRes);
+              setTranslatedContent(contentRes);
+              setIsTranslating(false);
+            }
+          }).catch(() => {
+            if (isMounted) setIsTranslating(false);
+          });
         });
-      });
+    });
+
 
     return () => {
       isMounted = false;

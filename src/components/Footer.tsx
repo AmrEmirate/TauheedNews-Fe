@@ -67,13 +67,13 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/kategori/haramain-news" className="hover:text-brass-gold transition-colors">
-                  {t('haramainNews')}
+                <Link href="/kategori/dunia-islam" className="hover:text-brass-gold transition-colors">
+                  {t('islamicWorld')}
                 </Link>
               </li>
               <li>
-                <Link href="/kategori/dunia-islam" className="hover:text-brass-gold transition-colors">
-                  {t('islamicWorld')}
+                <Link href="/kategori/haramain-news" className="hover:text-brass-gold transition-colors">
+                  {t('haramainNews')}
                 </Link>
               </li>
               <li>

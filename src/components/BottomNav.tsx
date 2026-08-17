@@ -39,8 +39,8 @@ export default function BottomNav() {
 
   const quickLinks = [
     { name: t('saudiNews'), href: '/kategori/saudi-arabia-terkini', icon: 'flag' },
-    { name: t('haramainNews'), href: '/kategori/haramain-news', icon: 'mosque' },
     { name: t('islamicWorld'), href: '/kategori/dunia-islam', icon: 'public' },
+    { name: t('haramainNews'), href: '/kategori/haramain-news', icon: 'mosque' },
     { name: t('fatwaLajnah'), href: '/kategori/fatwa-fikih', icon: 'gavel' },
     { name: t('islamicGuidance'), href: '/kategori/tuntunan-islam', icon: 'menu_book' },
     { name: t('sunnahLecturesVideos'), href: '/multimedia', icon: 'play_circle' },
